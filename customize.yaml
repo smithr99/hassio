@@ -1,0 +1,217 @@
+#### Lights ##################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+light.lounge_lamp_door:
+  icon: mdi:floor-lamp
+  friendly_name: 'Door'
+light.lounge_lamp_table:
+  icon: mdi:lamp
+  friendly_name: 'Table'
+light.tv:
+  icon: mdi:led-strip
+  friendly_name: 'TV'
+light.upstairs_hallway_middle:
+  icon: mdi:ceiling-light
+  friendly_name: 'Upstairs - Middle'
+light.upstairs_hallway_window:
+  icon: mdi:ceiling-light
+  friendly_name: 'Upstairs - Window'
+light.downstairs_stairs:
+  icon: mdi:ceiling-light
+  friendly_name: 'Downstairs - Stairs'
+light.downstairs_middle:
+  icon: mdi:ceiling-light
+  friendly_name: 'Downstairs - Middle'
+light.downstairs_front_door:
+  icon: mdi:ceiling-light
+  friendly_name: 'Downstairs - Front Door'
+light.hue_color_lamp_1:
+  icon: mdi:floor-lamp
+  friendly_name: 'Tripod Lamp'
+light.hue_ambiance_candle_1:
+  icon: mdi:lamp
+  friendly_name: 'Bedroom Becks'
+light.hue_ambiance_candle_2:
+  icon: mdi:lamp
+  friendly_name: 'Bedroom Ross'
+switch.christmas_tree:
+  icon: mdi:pine-tree
+  friendly_name: 'Christmas Tree'
+switch.gym_floor_fan:
+  icon: mdi:snowflake
+  friendly_name: 'Outside Christmas Lights'
+
+#### Sensors #################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+sensor.dark_sky_temperature:
+  friendly_name: 'Temp.'
+sensor.dark_sky_summary:
+  friendly_name: 'Weather'
+sensor.hallway_thermostat_operation_mode:
+  friendly_name: 'Nest Mode Setting'
+  icon: mdi:information-outline
+  hidden: false
+sensor.hallway_thermostat_target:
+  friendly_name: 'Nest Target Temperature'
+  icon: mdi:target
+  hidden: false
+sensor.hallway_thermostat_temperature:
+  friendly_name: 'Hallway Temperature'
+  icon: mdi:thermometer-lines
+  hidden: false
+sensor.hallway_thermostat_humidity:
+  friendly_name: 'Nest Humidity'
+  icon: mdi:water-percent
+  hidden: false
+sensor.battery_becksiphone:
+  friendly_name: "Becks' iPhone"
+  hidden: false
+sensor.battery_rossphone:
+  friendly_name: "Ross' Phone"
+  icon: mdi:battery-plus
+  hidden: false
+sensor.charging_rossphone:
+  friendly_name: Ross Charging Status
+  icon: mdi:battery-charging
+  hidden: false
+sensor.charging_becksiphone:
+  friendly_name: Becks Charging Status
+  icon: mdi:battery-charging
+  hidden: false
+sensor.school_meals_main_course:
+  icon: mdi:food
+sensor.school_meals_dessert:
+  icon: mdi:food-apple
+sensor.school_calendar:
+  icon: mdi:calendar-text
+sensor.gym_temperature:
+  friendly_name: 'Gym'
+  icon: mdi:temperature-celsius
+sensor.downstairs_temperature:
+  friendly_name: 'Downstairs Hallway'
+  icon: mdi:temperature-celsius
+sensor.kitchen_temperature:  
+  friendly_name: 'Kitchen'
+  icon: mdi:temperature-celsius
+sensor.upstairs_temperature:
+  friendly_name: 'Upstairs Hallway'
+  icon: mdi:temperature-celsius
+sensor.lounge_temperature:
+  friendly_name: 'Lounge'
+  icon: mdi:temperature-celsius
+sensor.bedroom_temperature:
+  friendly_name: 'Bedroom'
+  icon: mdi:temperature-celsius
+sensor.school_meals_date:
+  icon: mdi:calendar
+sensor.gym_sensor_battery:
+  icon: mdi:battery-charging
+  friendly_name: 'Gym Sensor Battery'
+sensor.kitchen_sensor_battery:
+  icon: mdi:battery-charging
+  friendly_name: 'Kitchen Sensor Battery'
+sensor.downstairs_sensor_battery:
+  icon: mdi:battery-charging
+  friendly_name: 'Downstairs Sensor Battery'
+sensor.upstairs_sensor_battery:
+  icon: mdi:battery-charging
+  friendly_name: 'Upstairs Sensor Battery'
+sensor.lounge_sensor_battery:
+  icon: mdi:battery-charging
+  friendly_name: 'Lounge Sensor Battery'
+sensor.bedroom_sensor_battery:
+  icon: mdi:battery-charging
+  friendly_name: 'Bedroom Sensor Battery'
+binary_sensor.gym_motion:
+  icon: mdi:run-fast
+  friendly_name: 'Gym Motion Sensor'
+binary_sensor.kitchen_motion:
+  icon: mdi:run-fast
+  friendly_name: 'Kitchen Motion Sensor'
+binary_sensor.downstairs_motion:
+  icon: mdi:run-fast
+  friendly_name: 'Downstairs Motion Sensor'
+binary_sensor.upstairs_motion:
+  icon: mdi:run-fast
+  friendly_name: 'Upstairs Motion Sensor'
+binary_sensor.lounge_motion:
+  icon: mdi:run-fast
+  friendly_name: 'Lounge Motion Sensor'
+binary_sensor.bedroom_motion:
+  icon: mdi:run-fast
+  friendly_name: 'Bedroom Motion Sensor'
+sensor.gym_lux:
+  icon: mdi:led-on
+  friendly_name: 'Gym Lux'
+sensor.lounge_lux:
+  icon: mdi:led-on
+  friendly_name: 'Lounge Lux'
+sensor.kitchen_lux:
+  icon: mdi:led-on
+  friendly_name: 'Kitchen Lux'
+sensor.downstairs_lux:
+  icon: mdi:led-on
+  friendly_name: 'Downstairs Lux'
+sensor.upstairs_lux:
+  icon: mdi:led-on
+  friendly_name: 'Upstairs Lux'
+sensor.bedroom_lux:
+  icon: mdi:led-on
+  friendly_name: 'Bedroom Lux'
+sensor.becks_commute_time:
+  friendly_name: 'Becks work commute'
+  icon: mdi:road-variant
+
+#### Cameras #################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+camera.garage_camera:
+  friendly_name: "Garage"
+camera.becks_location:
+  friendly_name: "Where's Becks?"
+camera.ross_location:
+  friendly_name: "Where's Ross?"
+
+
+
+#### Input Booleans ##########################################################################################
+#------------------------------------------------------------------------------------------------------------#
+input_boolean.holiday_mode:
+  friendly_name: 'Toggle Holiday Mode'
+  icon: mdi:beach
+input_boolean.alarm:
+  friendly_name: 'Alarm'
+  icon: mdi:alarm-bell
+input_boolean.boost_nest:
+  friendly_name: 'Boost Heating'
+  icon: mdi:library-plus
+input_boolean.disco_mode:
+  friendly_name: 'Disco Mode'
+  icon: mdi:movie-roll
+input_boolean.movie_mode:
+  friendly_name: 'Movie Mode'
+  icon: mdi:movie-roll
+
+
+#### Groups ##################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+group.school_meals:
+  friendly_name: 'School Meals'
+
+
+
+#### Other ###################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+switch.gym_fan:
+  icon: mdi:fan
+  friendly_name: 'Gym Extractor Fan'
+#switch.gym_floor_fan:
+#  icon: mdi:fan
+#  friendly_name: 'Gym Floor Fan'
+climate.hallway:
+  icon: mdi:thermometer
+  friendly_name: 'Nest Thermostat'
+media_player.aftn:
+  icon: mdi:amazon
+  friendly_name: 'Amazon Fire TV Lounge'
+media_player.samsung_led48_ue48h6700:
+  icon: mdi:television
+  friendly_name: 'Samsung TV Lounge'

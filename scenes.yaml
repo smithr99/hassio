@@ -1,0 +1,140 @@
+- name: 'Alarm - Lounge'
+  entities:
+    light.lounge_lamp_door: on
+    light.lounge_lamp_table: on
+    light.tv:
+      state: on
+      xy_color: [0.679, 0.3022]
+      brightness: 254
+
+- name: 'Evening - Lounge'
+  entities:
+    light.lounge_lamp_door:
+      state: on
+      brightness_pct: 100
+    light.lounge_lamp_table:
+      state: on
+      brightness_pct: 100
+    light.tv:
+      state: on
+      xy_color: [0.455, 0.421]
+      brightness_pct: 100
+    light.hue_color_lamp_1:
+      state: on
+      xy_color: [0.455, 0.421]
+      brightness_pct: 100
+      
+- name: 'Movie Mode - Lounge'
+  entities:
+    light.lounge_lamp_door:
+      state: on
+      brightness_pct: 60
+    light.lounge_lamp_table:
+      state: on
+      brightness_pct: 60
+    light.tv:
+      state: on
+      xy_color: [0.158, 0.089]
+      brightness_pct: 50
+    light.hue_color_lamp_1:
+      state: on
+      xy_color: [0.158, 0.089]
+      brightness_pct: 50
+
+- name: 'Day - Lounge'
+  entities:
+    light.lounge_lamp_door:
+      state: on
+      brightness_pct: 100
+    light.lounge_lamp_table:
+      state: on
+      brightness_pct: 100
+    light.tv:
+      state: on
+      xy_color: [0.455, 0.421]
+      brightness_pct: 100
+    light.hue_color_lamp_1:
+      state: on
+      xy_color: [0.455, 0.421]
+      brightness_pct: 100
+
+- name: 'Day - Downstairs'
+  entities:
+    light.downstairs_front_door:
+      state: on
+      brightness_pct: 75
+    light.downstairs_middle:
+      state: on
+      brightness_pct: 75
+    light.downstairs_stairs:
+      state: on
+      brightness_pct: 75
+
+- name: 'Evening - Downstairs'
+  entities:
+    light.downstairs_front_door:
+      state: on
+      brightness_pct: 50
+    light.downstairs_middle:
+      state: on
+      brightness_pct: 100
+    light.downstairs_stairs:
+      state: on
+      brightness_pct: 100
+
+- name: 'Night - Downstairs'
+  entities:
+    light.downstairs_front_door:
+      state: on
+      brightness_pct: 10
+    light.downstairs_middle:
+      state: on
+      brightness_pct: 10
+    light.downstairs_stairs:
+      state: on
+      brightness_pct: 10
+
+- name: 'Day - Upstairs'
+  entities:
+    light.upstairs_hallway_middle:
+      state: on
+      brightness_pct: 75
+    light.upstairs_hallway_window:
+      state: on
+      brightness_pct: 75
+
+- name: 'Evening - Upstairs'
+  entities:
+    light.upstairs_hallway_middle:
+      state: on
+      brightness_pct: 100
+    light.upstairs_hallway_window:
+      state: on
+      brightness_pct: 100
+
+- name: 'Night - Upstairs'
+  entities:
+    light.upstairs_hallway_middle:
+      state: on
+      brightness_pct: 25
+    light.upstairs_hallway_window:
+      state: on
+      brightness_pct: 25
+      
+- name: 'Day - Bedroom'
+  entities:
+    light.hue_ambiance_candle_1:
+      state: on
+      brightness_pct: 75
+    light.hue_ambiance_candle_2:
+      state: on
+      brightness_pct: 75
+
+- name: 'Night - Bedroom'
+  entities:
+    light.hue_ambiance_candle_1:
+      state: on
+      brightness_pct: 100
+    light.hue_ambiance_candle_2:
+      state: on
+      brightness_pct: 100

@@ -1,0 +1,410 @@
+title: Lanchester
+views:
+######################################################################
+##  MAIN TABS
+######################################################################
+
+  - icon: mdi:home
+    id: Home
+    
+    # 100% page width
+    panel: true
+    
+    cards:
+    
+##  First Column  ##################################
+ 
+      - type: horizontal-stack
+        cards: 
+          - type: vertical-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - type: picture-glance
+                    title: Becks
+                    image: /local/images/becks1.jpg
+                    entities:
+                      - sensor.becks
+                  - type: picture-glance
+                    title: Ross
+                    image: /local/images/ross1.jpg
+                    entities:
+                      - sensor.ross
+              - type: entities
+                title: Holidays
+                show_header_toggle: false
+                entities:
+                  - input_boolean.holiday_mode
+          
+##  Second Column  #################################         
+          
+#      - type: horizontal-stack
+#        cards:
+          - type: vertical-stack
+            cards:
+              - type: picture-glance
+                title: Kitchen
+                entities:
+                  - media_player.kitchen
+                  - sensor.kitchen_temperature
+                image: /local/images/kitchen3.jpg      
+              - type: horizontal-stack
+                cards:  
+                  - type: picture-glance
+                    title: Upstairs
+                    entities:
+                      - light.upstairs_hallway_window
+                      - light.upstairs_hallway_middle 
+                      - sensor.upstairs_temperature
+                    image: /local/images/upstairs.jpg     
+                  - type: picture-glance
+                    title: Downstairs
+                    entities:
+                      - light.lounge_lamp_door
+                      - light.downstairs_stairs
+                      - light.downstairs_middle
+                      #- light.downstairs_front_door
+                      - sensor.downstairs_temperature
+                    image: /local/images/downstairs2.jpg                   
+              - type: picture-glance
+                title: Lounge
+                entities:
+                  #- light.lounge_lamp_door
+                  - light.lounge_lamp_table
+                  - light.tv
+                  - light.hue_color_lamp_1
+                  - switch.christmas_tree
+                  - media_player.lounge
+                  - sensor.lounge_temperature
+                image: /local/images/living_room2.jpg   
+              - type: horizontal-stack
+                cards:
+                  - type: picture-glance
+                    title: Driveway
+                    entities:
+                      - sensor.pws_temp_c
+                    camera_image: camera.garage_front
+                  - type: picture-glance
+                    title: Garden
+                    entities:
+                      - switch.gym_floor_fan
+                    camera_image: camera.rear_elevation 
+          
+##  Third Column  ##################################        
+          
+#      - type: horizontal-stack
+#        cards: 
+          - type: vertical-stack
+            cards:
+              - type: entities
+                title: Commute Time
+                show_header_toggle: false
+                entities:
+                  - sensor.becks_commute_to_work
+                  - sensor.ross_commute_to_work
+              - type: conditional
+                conditions:
+                  - entity: group.person_becks
+                    state: 'not_home'
+                card:
+                  type: entities
+                  title: Travel Time - Becks
+                  show_header_toggle: false
+                  entities:
+                    - sensor.becks_time_to_home
+              - type: conditional
+                conditions:
+                  - entity: group.person_ross
+                    state: 'not_home'
+                card:
+                  type: entities
+                  title: Travel Time - Ross
+                  show_header_toggle: false
+                  entities:
+                    - sensor.ross_time_to_home
+              - type: entities
+                title: Trains
+                show_header_toggle: false
+                entities:
+                  - sensor.train_1_scheduled
+                  - sensor.train_1_status
+
+                  
+##  MAPS  ######################################
+################################################ 
+                 
+  - icon: mdi:google-maps
+    id: Map
+    #panel: true
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: map
+            default_zoom: 15
+            #aspect_ratio: 50%
+            entities:
+              - device_tracker.iphone
+              - device_tracker.google_maps_118445798565592098278
+          - type: horizontal-stack
+            cards:
+              - type: map
+                default_zoom: 12
+                entities:
+                  - device_tracker.iphone
+              - type: map
+                default_zoom: 12
+                entities:
+                  - device_tracker.google_maps_118445798565592098278
+ 
+
+##  LIGHTS  ####################################
+################################################ 
+
+  - icon: mdi:lightbulb-on-outline
+    id: lighting
+    cards:
+      - type: entities
+        title: Sun
+        show_header_toggle: false
+        entities:
+          - sun.sun
+      - type: entities
+        title: Bedroom
+        entities:
+          - light.hue_ambiance_candle_1
+          - light.hue_ambiance_candle_2
+          - sensor.bedroom_lux
+      - type: entities
+        title: Upstairs Hallway
+        show_state: false
+        entities:
+          - light.upstairs_hallway_window
+          - light.upstairs_hallway_middle
+          - sensor.upstairs_lux
+      - type: entities
+        title: Downstairs Hallway
+        entities:
+          - light.downstairs_stairs
+          - light.downstairs_middle
+          - light.downstairs_front_door
+          - sensor.downstairs_lux
+      - type: entities
+        title: Lounge
+        entities:
+          - light.lounge_lamp_door
+          - light.lounge_lamp_table
+          - light.tv
+          - light.hue_color_lamp_1
+          - switch.christmas_tree
+          - sensor.lounge_lux
+      - type: entities
+        title: Christmas
+        entities:
+          - switch.gym_floor_fan
+          - switch.christmas_tree
+#      - type: entities
+#        title: Study
+#        entities:
+
+            
+
+##  ALARM  #####################################
+################################################ 
+   
+  - icon: mdi:alarm-bell
+    id: alarm
+    cards:
+      - type: entities
+        title: House Alarm
+        show_header_toggle: false
+        entities:
+          - input_boolean.alarm
+          - binary_sensor.kitchen_motion
+          - binary_sensor.downstairs_motion
+          - binary_sensor.upstairs_motion
+          - binary_sensor.bedroom_motion
+          - binary_sensor.lounge_motion
+          - binary_sensor.gym_motion
+      #- type: divider
+      - type: entities
+        title: Last Motion Detection
+        show_header_toggle: false
+        entities: 
+          - sensor.last_motion            
+
+
+##  CLIMATE  ###################################
+################################################ 
+         
+  - icon: mdi:weather-partlycloudy
+    id: climate
+    cards:
+      - type: thermostat
+        entity: climate.hallway
+      - type: entities
+        title: Climate Control
+        entities:
+          - climate.hallway
+          - sensor.hallway_thermostat_temperature
+          - sensor.hallway_thermostat_target
+          - sensor.hallway_thermostat_humidity
+          - sensor.hallway_thermostat_operation_mode
+      - type: entities
+        title: Heating Boost
+        show_header_toggle: false
+        entities:
+          - input_boolean.boost_nest
+          - input_number.boost_heating
+          - input_number.towel_warmer
+      - type: entities
+        title: Temperature
+        show_header_toggle: false
+        entities:
+          - sensor.kitchen_temperature
+          - sensor.downstairs_temperature
+          - sensor.upstairs_temperature
+          - sensor.lounge_temperature
+          - sensor.gym_temperature
+          - switch.gym_fan
+          - switch.gym_floor_fan
+      - type: entities
+        title: 4 day Forecast
+        show_header_toggle: false
+        entities:
+          - sensor.pws_weather_1d_metric
+          - sensor.pws_weather_1n_metric
+          - sensor.pws_weather_2d_metric
+          - sensor.pws_weather_2n_metric
+          - sensor.pws_weather_3d_metric
+          - sensor.pws_weather_3n_metric
+          - sensor.pws_weather_4d_metric
+          - sensor.pws_weather_4n_metric
+
+    
+          
+          
+######################################################################
+##  ROOMS
+######################################################################
+
+
+##  KITCHEN  ###################################
+################################################   
+       
+  - icon: mdi:silverware-variant
+    id: Kitchen
+    cards:
+      - type: media-control
+        entity: media_player.kitchen 
+ 
+
+##  LOUNGE  ####################################
+################################################ 
+
+  - icon: mdi:sofa
+    id: Lounge
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            show_state: false
+            title: Lighting
+            entities:
+              - light.lounge_lamp_door
+              - light.lounge_lamp_table
+              - light.tv
+              - light.hue_color_lamp_1
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                entity: input_boolean.movie_mode
+                show_state: false
+                tap_action: toggle
+                state_image:
+                  "on": /local/images/moviemode_on.png
+                  "off": /local/images/moviemode_off.png
+              - type: picture-entity
+                entity: input_boolean.disco_mode
+                show_state: false
+                tap_action: toggle
+                state_image:
+                  "on": /local/images/discomode_on.png
+                  "off": /local/images/discomode_off.png
+          - type: media-control
+            entity: media_player.lounge
+          
+          
+######################################################################
+##  OTHER
+######################################################################
+ 
+##  AUTOMATIONS  ###############################
+################################################ 
+
+  - icon: mdi:home-automation
+    id: automatics
+    cards:
+      - type: entities
+        title: Lighting Automation
+        show_header_toggle: false
+        entities:
+          - automation.dim_lights_at_kids_bedtime
+          - automation.reactivate_normal_lighting_after_movie_mode
+          - automation.study_light_off_when_pc_off
+          - automation.study_light_on_when_pc_on
+          - automation.turn_light_brightness_to_full_in_morning
+          - automation.turn_lights_on_when_arriving_home_after_sunset
+          - automation.turn_lounge_lights_on_at_sunset_if_someone_is_home
+          - automation.turn_off_all_lights_if_noone_at_home
+          - automation.turn_off_lounge_lights_at_11pm
+          - automation.turn_off_upstairs_lights_at_sunrise
+          - automation.turn_on_upstairs_lights_at_sunset
+      - type: entities
+        title: Gym Fan Control Automation
+        show_header_toggle: false
+        entities:          
+          - automation.turn_off_gym_fan_when_temp_too_low
+          - automation.turn_on_gym_fan_when_temp_too_high
+      - type: entities
+        title: Motion Detection Lighting Automation
+        show_header_toggle: false
+        entities: 
+          - automation.bedroom_lights_on_when_motion_detected
+          - automation.downstairs_lights_on_when_motion_detected
+          - automation.downstairs_lights_off_after_motion_detected
+          - automation.lounge_lights_on_when_motion_detected
+          - automation.lounge_lights_off_after_motion_detected
+          - automation.upstairs_lights_on_when_motion_detected
+          - automation.upstairs_lights_off_after_motion_detected
+      - type: entities
+        title: House Alarm Automation
+        show_header_toggle: false
+        entities:          
+          - automation.autoset_alarm
+          - automation.cancel_alarm_if_home
+          - automation.cancel_alarm_when_cleaner_is_at_home
+      - type: entities
+        title: Other Automation
+        show_header_toggle: false
+        entities:          
+          - automation.turn_on_radio2_in_kitchen_in_the_morning
+      - type: entities
+        title: Heating Automation
+        show_header_toggle: false
+        entities:          
+          - automation.turn_on_heating_if_anyone_home
+          - automation.turn_off_heating_if_noone_home
+          - automation.warm_towels  
+      - type: entities
+        title: Xmas
+        show_header_toggle: false
+        entities:
+          - automation.xmas_lights_off
+          - automation.xmas_lights_on
+          - automation.xmas_lights_on_if_home
+          - automation.turn_on_christmas_songs_in_house_on_25th_dec
+      - type: entities
+        title: Tester
+        show_header_toggle: false
+        entities:
+          - input_boolean.tester

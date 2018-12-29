@@ -1,0 +1,38 @@
+#### Philips HUE Motion Sensors ##############################################################################
+#------------------------------------------------------------------------------------------------------------#
+
+- platform: rest
+  resource: !secret motion_kitchen
+  value_template: '{{ value_json.state.presence }}'
+  scan_interval: 1
+  name: 'Kitchen Motion'
+
+- platform: rest
+  resource: !secret motion_lounge
+  value_template: '{{ value_json.state.presence }}'
+  scan_interval: 1
+  name: 'Lounge Motion'
+
+- platform: rest
+  resource: !secret motion_upstairs
+  value_template: '{{ value_json.state.presence }}'
+  scan_interval: 1
+  name: 'Upstairs Motion'
+
+- platform: rest
+  resource: !secret motion_downstairs
+  value_template: '{{ value_json.state.presence }}'
+  scan_interval: 1
+  name: 'Downstairs Motion'
+
+- platform: rest
+  resource: !secret motion_gym
+  value_template: '{{ value_json.state.presence }}'
+  scan_interval: 1
+  name: 'Gym Motion'
+  
+- platform: rest
+  resource: !secret motion_bedroom
+  value_template: '{{ value_json.state.presence }}'
+  scan_interval: 1
+  name: 'Bedroom Motion'

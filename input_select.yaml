@@ -1,0 +1,10 @@
+last_room_with_motion:
+  name: Last Room With Motion
+  options:
+    - Lounge
+    - Kitchen
+    - Bedroom
+    - Upstairs
+    - Downstairs
+    - Unknown
+  initial: Unknown

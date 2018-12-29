@@ -1,0 +1,171 @@
+homeassistant:
+  name: Lanchester
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: !secret elevation
+  unit_system: metric
+  time_zone: Europe/London
+  customize: !include customize.yaml
+
+# Enables the frontend
+frontend:
+  #themes: !include themes.yaml
+lovelace:
+  mode: yaml
+
+# Enables configuration UI
+config:
+
+http:
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  base_url: 10.0.30.3:8123
+
+updater:
+
+# Discover some devices automatically
+discovery:
+#  ignore:
+    #- samsung_tv
+    #- plex_mediaserver
+#    - google_cast
+
+
+
+
+
+
+
+#### Sensors #################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+  
+# Track the sun
+sun:
+
+# Text to speech
+tts:
+  - platform: google
+  
+  
+#### Logging #################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+  
+# Enables support for tracking state changes over time
+history:  
+  
+# View all events in a logbook
+#logbook:  
+  
+logger:
+  default: info
+  logs:
+    urllib3.connectionpool: critical
+
+recorder:
+  purge_keep_days: 7
+  purge_interval: 1
+  include:
+    domains:
+      - media_player
+      - device_tracker
+  
+influxdb:
+  host: !secret influxdb_host
+  port: !secret influxdb_port
+  username: !secret influxdb_username
+  password: !secret influxdb_password
+  database: !secret influxdb_database
+
+
+#### Devices #################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+
+nest:
+  client_id: !secret nest_id
+  client_secret: !secret nest_secret
+
+hue:
+  bridges:
+    - host: 10.0.30.59
+      allow_unreachable: True
+      allow_hue_groups: false
+
+switch:
+  - platform: tplink
+    host: 10.0.30.63
+    name: 'Gym Fan'
+  - platform: tplink
+    host: 10.0.30.64
+    name: 'Christmas Tree'
+  - platform: tplink
+    host: 10.0.30.67
+    name: 'Gym Floor Fan'
+
+media_player:
+  - platform: sonos
+    hosts:
+      - 10.0.30.65
+      - 10.0.30.66
+
+konnected:
+  access_token: !secret konnected_token
+  devices:
+    - id: !secret konnected_id1
+      
+      
+#### Cloud Services ##########################################################################################
+#------------------------------------------------------------------------------------------------------------#
+google:
+  client_id: !secret google_api_client_id
+  client_secret: !secret google_api_client_secret
+
+cloud:
+  alexa:
+    filter:
+      exclude_domains:
+        - alert
+        - automation
+        - cover
+        - fan
+        - group
+        - input_boolean
+        - light
+        - lock
+        - media_player
+        - scene
+        - script
+        - sensor
+        - switch
+      include_entities:
+        - script.movie_mode
+        - switch.christmas_tree
+        - switch.gym_floor_fan
+    entity_config:
+      script.movie_mode:
+        name: Movie Mode
+        description: Turn on Movie Mode in the lounge
+        display_categories: SCENE_TRIGGER
+      switch.christmas_tree:
+        name: Christmas Tree
+        description: Christmas Tree Lights
+        display_categories: LIGHT
+      switch.gym_floor_fan:
+        name: Christmas Lights
+        description: Outside Christmas Lights
+        display_categories: LIGHT    
+
+#### External files ##########################################################################################
+#------------------------------------------------------------------------------------------------------------#
+notify: !include notify.yaml
+sensor: !include sensors.yaml
+binary_sensor: !include binary_sensors.yaml
+device_tracker: !include device_tracker.yaml
+input_boolean: !include input_boolean.yaml
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+zone: !include zones.yaml
+camera: !include googlemaps.yaml
+input_number: !include input_number.yaml
+input_select: !include input_select.yaml

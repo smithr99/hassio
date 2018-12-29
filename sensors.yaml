@@ -1,0 +1,430 @@
+
+
+#### Travel ##################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+- platform: template
+  sensors:
+    ross_loc:
+      value_template: >
+        {{ states.device_tracker.google_maps_118445798565592098278.attributes.latitude }},{{ states.device_tracker.google_maps_118445798565592098278.attributes.longitude }}
+    becks_loc:
+      value_template: >
+        {{ states.device_tracker.iphone.attributes.latitude }},{{ states.device_tracker.iphone.attributes.longitude }}
+
+- platform: waze_travel_time
+  name: "Becks time to home"
+  origin: sensor.becks_loc
+  destination: zone.home
+  region: 'EU'
+  
+- platform: waze_travel_time
+  name: "Ross time to home"
+  origin: sensor.ross_loc
+  destination: zone.home
+  region: 'EU'
+  
+- platform: waze_travel_time
+  name: "Becks commute to work"
+  origin: sensor.becks_loc
+  destination: zone.becks_work
+  region: 'EU'
+  
+- platform: waze_travel_time
+  name: "Ross commute to work"
+  origin: sensor.ross_loc
+  destination: zone.ross_office
+  region: 'EU'
+  
+- platform: google_geocode
+  name: Ross
+  origin: device_tracker.google_maps_118445798565592098278
+  options: street, city
+  display_zone: show
+  api_key: !secret google_geocode
+  
+- platform: google_geocode
+  name: Becks
+  origin: device_tracker.iphone
+  options: street, city
+  display_zone: show
+  api_key: !secret google_geocode   
+  
+- platform: uk_transport
+  app_id: !secret transportapi_appid
+  app_key: !secret transportapi_appkey
+  queries:
+    - mode: train
+      origin: LHO
+      destination: MCV
+      
+- platform: template
+  sensors:
+    train_status:
+      friendly_name: 'Next train status'
+      icon_template: mdi:train
+      value_template: '{{states.sensor.next_train_to_mcv.attributes.next_trains[0].status}}'
+    train_1_status:
+      friendly_name: 'Current status'
+      icon_template: mdi:train
+      value_template: >-
+        {% if is_state('sensor.next_train_to_mcv', 'No departures') %}
+          No Departures
+        {% else %}
+          {% if is_state('sensor.train_status', 'ON TIME') %}
+            On Time
+          {% elif is_state('sensor.train_status', 'DELAYED') %}
+            Delayed by '{{ states.sensor.train_1_delay.attributes.state }}'
+          {% else %}
+            n/a
+          {% endif %}
+        {% endif %}
+    train_1_estimated:
+      friendly_name: 'Next train Estimated'
+      icon_template: mdi:train
+      value_template: '{{states.sensor.next_train_to_mcv.attributes.next_trains[0].estimated}}'
+    train_1_scheduled:
+      friendly_name: 'Next train from Langho to Mcr Victoria'
+      icon_template: mdi:train
+      value_template: '{{states.sensor.next_train_to_mcv.attributes.next_trains[0].scheduled}}'
+    train_1_delay:
+      friendly_name: 'Delay'
+      icon_template: mdi:train
+      value_template: >
+        '{{ (as_timestamp(strptime(states.sensor.next_train_to_mcv.attributes.next_trains[0].estimated, '%H:%M')) - as_timestamp(strptime(states.sensor.next_train_to_mcv.attributes.next_trains[0].scheduled, '%H:%M')))/60 }} minutes'
+
+
+#### Time and Date ###########################################################################################
+#------------------------------------------------------------------------------------------------------------#
+- platform: time_date
+  display_options:
+    - 'time'
+    - 'date'
+    - 'date_time'
+
+#### Weather #################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+
+- platform: wunderground
+  api_key: !secret wunderground_api
+  monitored_conditions:
+    - alerts
+    - feelslike_c
+    - location
+    - temp_c
+    - weather
+    - weather_1d_metric
+    - weather_1n_metric
+    - weather_2d_metric
+    - weather_2n_metric
+    - weather_3d_metric
+    - weather_3n_metric
+    - weather_4d_metric
+    - weather_4n_metric
+
+- platform: darksky
+  api_key: !secret darksky_api
+  monitored_conditions:
+    - summary
+    - icon
+    - precip_type
+    - temperature
+
+
+
+
+#### Philips HUE Sensors - Temp/Battery/Lux ##################################################################
+#------------------------------------------------------------------------------------------------------------#
+
+## Philips HUE - KITCHEN ##########################################
+#-----------------------------------------------------------------#  
+- platform: rest
+  resource: !secret temp_kitchen
+  value_template: '{{ (value_json.state.temperature | float / 100 + 1.6) | round(1) }}'
+  unit_of_measurement: °C
+  scan_interval: 120
+  name: 'Kitchen Temperature'
+
+- platform: rest
+  resource: !secret battery_kitchen
+  value_template: '{{ value_json.config.battery }}'
+  unit_of_measurement: "%"
+  scan_interval: 1800
+  name: 'Kitchen Sensor Battery'
+
+- platform: rest
+  resource: !secret lux_kitchen
+  value_template: '{{(10 ** (float (value_json.state.lightlevel) / 10000) -1) | round (1)}}'
+  unit_of_measurement: Lux
+  scan_interval: 5
+  name: 'Kitchen Lux'
+
+
+
+## Philips HUE - BEDROOM ###########################################
+#-----------------------------------------------------------------#
+- platform: rest
+  resource: !secret temp_bedroom
+  value_template: '{{ (value_json.state.temperature | float / 100 + 1.6) | round(1) }}'
+  unit_of_measurement: °C
+  scan_interval: 120
+  name: 'Bedroom Temperature'
+
+- platform: rest
+  resource: !secret battery_bedroom
+  value_template: '{{ value_json.config.battery }}'
+  unit_of_measurement: "%"
+  scan_interval: 1800
+  name: 'Bedroom Sensor Battery'
+
+- platform: rest
+  resource: !secret lux_bedroom
+  value_template: '{{(10 ** (float (value_json.state.lightlevel) / 10000) -1) | round (1)}}'
+  unit_of_measurement: Lux
+  scan_interval: 5
+  name: 'Bedroom Lux' 
+  
+- platform: rest 
+  resource: !secret dimmer_bedroom 
+  name: 'Bedroom Dimmer Button Event'
+  value_template: '{{ value_json.state.buttonevent }}' 
+  scan_interval: 1 
+#
+- platform: rest 
+  resource: !secret dimmer_bedroom 
+  name: 'Bedroom Dimmer Last Update'
+  value_template: '{{ value_json.state.lastupdated }}' 
+  scan_interval: 1 
+  
+- platform: template
+  sensors:
+    bedroom_dimmer_status:
+      friendly_name: 'Bedroom Dimmer'
+      value_template: >-
+        {% if is_state('sensor.bedroom_dimmer_button_event', '1002') %}
+          1 Click
+        {% elif is_state('sensor.bedroom_dimmer_button_event', '1003') %}
+          1 Hold
+        {% elif is_state('sensor.bedroom_dimmer_button_event', '2002') %}
+          2 Click
+        {% elif is_state('sensor.bedroom_dimmer_button_event', '2003') %}
+          2 Hold
+        {% elif is_state('sensor.bedroom_dimmer_button_event', '3002') %}
+          3 Click
+        {% elif is_state('sensor.bedroom_dimmer_button_event', '3003') %}
+          3 Hold
+        {% elif is_state('sensor.bedroom_dimmer_button_event', '4002') %}
+          4 Click
+        {% elif is_state('sensor.bedroom_dimmer_button_event', '4003') %}
+          4 Hold
+        {% else %}
+          No Response
+        {% endif %}
+        
+        
+  
+  ## Philips HUE - LOUNGE ###########################################
+#-----------------------------------------------------------------#
+- platform: rest
+  resource: !secret temp_lounge
+  value_template: '{{ (value_json.state.temperature | float / 100 + 1.6) | round(1) }}'
+  unit_of_measurement: °C
+  scan_interval: 120
+  name: 'Lounge Temperature'
+
+- platform: rest
+  resource: !secret battery_lounge
+  value_template: '{{ value_json.config.battery }}'
+  unit_of_measurement: "%"
+  scan_interval: 1800
+  name: 'Lounge Sensor Battery'
+
+- platform: rest
+  resource: !secret lux_lounge
+  value_template: '{{(10 ** (float (value_json.state.lightlevel) / 10000) -1) | round (1)}}'
+  unit_of_measurement: Lux
+  scan_interval: 5
+  name: 'Lounge Lux'  
+
+
+
+## Philips HUE - UPSTAIRS #########################################
+#-----------------------------------------------------------------#  
+- platform: rest
+  resource: !secret temp_upstairs
+  value_template: '{{ (value_json.state.temperature | float / 100 + 1.6) | round(1) }}'
+  unit_of_measurement: °C
+  scan_interval: 120
+  name: 'Upstairs Temperature'
+
+- platform: rest
+  resource: !secret battery_upstairs
+  value_template: '{{ value_json.config.battery }}'
+  unit_of_measurement: "%"
+  scan_interval: 1800
+  name: 'Upstairs Sensor Battery'
+
+- platform: rest
+  resource: !secret lux_upstairs
+  value_template: '{{(10 ** (float (value_json.state.lightlevel) / 10000) -1) | round (1)}}'
+  unit_of_measurement: Lux
+  scan_interval: 5
+  name: 'Upstairs Lux'
+
+
+
+## Philips HUE - DOWNSTAIRS #######################################
+#-----------------------------------------------------------------#  
+- platform: rest
+  resource: !secret temp_downstairs
+  value_template: '{{ (value_json.state.temperature | float / 100 + 1.6) | round(1) }}'
+  unit_of_measurement: °C
+  scan_interval: 120
+  name: 'Downstairs Temperature'
+
+- platform: rest
+  resource: !secret battery_downstairs
+  value_template: '{{ value_json.config.battery }}'
+  unit_of_measurement: "%"
+  scan_interval: 1800
+  name: 'Downstairs Sensor Battery'
+
+- platform: rest
+  resource: !secret lux_downstairs
+  value_template: '{{(10 ** (float (value_json.state.lightlevel) / 10000) -1) | round (1)}}'
+  unit_of_measurement: Lux
+  scan_interval: 5
+  name: 'Downstairs Lux'
+
+
+
+## Philips HUE - GYM ##############################################
+#-----------------------------------------------------------------#  
+- platform: rest
+  entity_id: 'gym_temperature'
+  resource: !secret temp_gym
+  value_template: '{{ (value_json.state.temperature | float / 100 + 1.6) | round(1) }}'
+  unit_of_measurement: °C
+  scan_interval: 120
+  name: 'Gym Temperature'
+
+- platform: rest
+  resource: !secret battery_gym
+  value_template: '{{ value_json.config.battery }}'
+  unit_of_measurement: "%"
+  scan_interval: 1800
+  name: 'Gym Sensor Battery'
+
+- platform: rest
+  resource: !secret lux_gym
+  value_template: '{{(10 ** (float (value_json.state.lightlevel) / 10000) -1) | round (1)}}'
+  unit_of_measurement: Lux
+  scan_interval: 5
+  name: 'Gym Lux'
+
+
+  
+  
+#### Other ###################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+- platform: fitbit
+  clock_format: 24H
+  monitored_resources:
+    - "body/weight"
+    - "body/fat"
+    - "devices/battery"
+
+- platform: tautulli
+  api_key: !secret tautulli_api
+  host: 10.0.30.6
+
+- platform: template
+  sensors:
+    energy_rate:
+      friendly_name: "Energy Rate"
+      value_template: >-
+        {% if now().isoweekday() == 6 or now().isoweekday() == 7 %}
+          {% if now().hour < 15 or now().hour >= 19 %}
+            Off Peak
+          {% else %}
+            Peak
+          {% endif %}
+        {% else %}
+          {% if now().hour < 7 or now().hour >= 23 %}
+            Off Peak
+          {% elif now().hour >= 7 and now().hour < 14 %}
+            Partial Peak
+          {% elif now().hour >= 14 and now().hour < 21 %}
+            Peak
+          {% elif now().hour >= 21 and now().hour < 23 %}
+            Partial Peak
+          {% endif %}
+        {% endif %}
+
+- platform: template
+  sensors:
+    last_motion:
+      friendly_name: 'Last Motion'
+      value_template: >-
+        {% set sensors = [states.binary_sensor.upstairs_motion, states.binary_sensor.downstairs_motion, states.binary_sensor.bedroom_motion, states.binary_sensor.kitchen_motion, states.binary_sensor.lounge_motion] %}
+        {% for sensor in sensors %}
+          {% if as_timestamp(sensor.last_changed) == as_timestamp(sensors | map(attribute='last_changed') | max) %}
+            {{ sensor.name }}
+          {% endif %}
+        {% endfor %}
+    
+- platform: template
+  sensors:
+    last_motion_time:
+      friendly_name: 'Time since last motion'
+      value_template: >-
+        {% set sensors = [states.binary_sensor.upstairs_motion, states.binary_sensor.downstairs_motion, states.binary_sensor.bedroom_motion, states.binary_sensor.kitchen_motion, states.binary_sensor.lounge_motion] %}
+        {% for sensor in sensors %}
+          {% if as_timestamp(sensor.last_changed) == as_timestamp(sensors | map(attribute='last_changed') | max) %}
+            {{ now() - sensor.last_changed  }}
+          {% endif %}
+        {% endfor %}
+        
+- platform: template
+  sensors:
+    last_motion_time_templated:
+      friendly_name: 'Time since last motion templated'
+      value_template: >-
+        {%- set slb = states.sensor.last_motion_time.state.split(' ') -%}
+        {%- set count = slb | length -%}
+        {%- set hms = slb[count - 1] -%}
+        {%- set hms_trimmed = hms.split('.')[0] -%}
+        {%- set hms_split = hms_trimmed.split(':') -%}
+        {%- set hours = hms_split[0] | int -%}
+        {%- set minutes = hms_split[1] | int -%}
+        {%- set seconds = hms_split[2] | int -%}
+        {%- if count == 3 -%}
+          {{ slb[0] ~ ' ' ~ slb[1] ~ ' ' }}
+        {%- endif -%}
+        {%- if hours > 0 -%}
+          {%- if hours == 1 -%}
+            1 hour
+          {%- else -%}
+            {{ hours }} hours
+          {%- endif -%}
+        {%- endif -%}
+        {%- if minutes > 0 -%}
+          {%- if hours > 0 -%}
+            {{ ', ' }}
+          {%- endif -%}
+          {%- if minutes == 1 -%}
+            1 minute
+          {%- else -%}
+            {{ minutes }} minutes
+          {%- endif -%}
+        {%- endif -%}
+        {%- if seconds > 0 -%}
+          {%- if hours > 0 or minutes > 0 -%}
+            {{ ', ' }}
+          {%- endif -%}
+          {%- if seconds == 1 -%}
+            1 second
+          {%- else -%}
+            {{ seconds }} seconds
+          {%- endif -%}
+        {%- endif -%}
+        {{ ' ago' }}

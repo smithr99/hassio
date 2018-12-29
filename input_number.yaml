@@ -1,0 +1,35 @@
+lighting_downstairs_delay_day:
+  name: 'Downstairs Delay (Day)'
+  icon: mdi:clock-end
+  unit_of_measurement: 's'
+  initial: 30
+  min: 10
+  max: 120
+  step: 10
+
+lighting_downstairs_delay_night:
+  name: 'Downstairs Delay (Night)'
+  icon: mdi:clock-end
+  unit_of_measurement: 's'
+  initial: 30
+  min: 10
+  max: 120
+  step: 10
+  
+boost_heating:
+  name: 'Boost duration'
+  icon: mdi:clock-end
+  unit_of_measurement: 'm'
+  initial: 30
+  min: 1
+  max: 59
+  step: 1
+  
+towel_warmer:
+  name: 'Towel warmer duration'
+  icon: mdi:radiator
+  unit_of_measurement: 'm'
+  initial: 30
+  min: 5
+  max: 55
+  step: 5

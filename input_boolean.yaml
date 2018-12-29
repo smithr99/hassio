@@ -1,0 +1,41 @@
+holiday_mode:
+  initial: off
+
+map_ross:
+  initial: on
+
+map_becks:
+  initial: on
+
+school_meals:
+  initial: on
+
+alarm:
+  initial: off
+
+alarm_is_on:
+  initial: off
+
+forgot_to_set_alarm:
+  initial: off
+  
+boost_nest:
+  initial: off
+  
+disco_mode:
+  initial: off
+  
+movie_mode:
+  initial: off
+  
+alexa_alarm:
+  name: Alexa Alarm
+  initial: off
+  
+is_work_day:
+  name: Working Day
+  
+## TESTING BOOLEAN INPUT - USE ONLY FOR TESTING ###########################  
+tester:
+  name: Test on off
+  initial: off

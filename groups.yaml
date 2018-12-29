@@ -1,0 +1,299 @@
+#### Menu Tabs################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:
+    - sun.sun
+
+
+
+
+#### Groups ##################################################################################################
+#------------------------------------------------------------------------------------------------------------#
+
+## Groups - ROOMS #################################################
+#-----------------------------------------------------------------#
+lounge:
+  name: Lounge
+  entities:
+    - light.lounge_lamp_door
+    - light.lounge_lamp_table
+    - light.tv
+    - light.hue_color_lamp_1
+    - switch.christmas_tree
+    - input_boolean.disco_mode
+    - input_boolean.movie_mode
+    - sensor.lounge_lux
+
+upstairs_hallway:
+  name: Upstairs Hallway
+  entities:
+    - light.upstairs_hallway_window
+    - light.upstairs_hallway_middle
+    - sensor.upstairs_lux
+
+downstairs_hallway:
+  name: Downstairs Hallway
+  entities:
+    - light.downstairs_stairs
+    - light.downstairs_middle
+    - light.downstairs_front_door
+    - sensor.downstairs_lux
+
+outside:
+  name: Outside
+  entities:
+    - camera.garage_front
+    - camera.rear_elevation
+
+kitchen:
+  name: Kitchen
+  entities:
+    - media_player.kitchen
+    
+bedroom:
+  name: Bedroom
+  entities:
+    - light.hue_ambiance_candle_1
+    - light.hue_ambiance_candle_2
+
+
+
+## Groups - SWITCHES ###############################################
+##-----------------------------------------------------------------#
+switches:
+  name: 'Remote Switches'
+  entities:
+    - switch.gym_fan
+    - switch.christmas_tree
+    - switch.gym_floor_fan
+
+## Groups - SENSORS ################################################
+#------------------------------------------------------------------#
+climate:
+  name: Climate Control
+  entities:
+    - climate.hallway
+    - sensor.hallway_thermostat_temperature
+    - sensor.hallway_thermostat_target
+    - sensor.hallway_thermostat_humidity
+    - sensor.hallway_thermostat_operation_mode
+
+media_players:
+  name: Media Players
+  entities:
+    - media_player.kitchen
+    - media_player.lounge
+    - media_player.fire_tv_lounge
+
+
+## Groups - DEVICE TRACKERS #######################################   
+#-----------------------------------------------------------------# 
+person_ross:
+  entities:
+    - device_tracker.google_maps_118445798565592098278
+    - device_tracker.rossphone
+    - device_tracker.ping_study_pc
+
+person_becks:
+  entities:
+    - device_tracker.iphone
+    
+person_guests:
+  entities:
+    - device_tracker.emmasiphone
+    - device_tracker.ruthcragsiphone
+    - device_tracker.craigsiphone
+    - device_tracker.tonysphone
+    - device_tracker.jensiphone
+    - device_tracker.404e3684c25c
+
+people:
+  entities:
+    - group.person_ross
+    - group.person_becks
+    - group.person_guests
+
+map:
+  name: Location Map
+  entities:
+    - camera.ross_location
+    - camera.becks_location
+
+map_ross:
+  name: "Ross' Location"
+  entities:
+    - camera.ross_location
+
+map_becks:
+  name: "Becks' Location"
+  entities:
+    - camera.becks_location
+    
+locations:
+  name: "Family"
+  entities:
+    - device_tracker.iphone
+    - device_tracker.google_maps_118445798565592098278
+
+
+
+## Groups - AUTOMATICS ############################################
+#-----------------------------------------------------------------#
+autos_lighting:
+  name: Lighting Automation
+  entities:
+    - automation.bedroom_lights_on_when_motion_detected
+    - automation.dim_lights_at_kids_bedtime
+    - automation.turn_lounge_lights_on_at_sunset_if_someone_is_home
+    - automation.turn_off_all_lights_if_noone_at_home
+    - automation.turn_off_lounge_lights_at_midnight
+    - automation.turn_off_upstairs_lights_at_sunrise
+    - automation.turn_light_brightness_to_full_in_morning
+    - automation.turn_on_upstairs_lights_at_sunset
+    - automation.turn_lights_on_when_arriving_home_after_sunset
+    - automation.study_light_on_when_pc_on
+    - automation.study_light_off_when_pc_off
+    - automation.turn_light_brightness_to_full_in_morning
+    - automation.turn_off_bedroom_lights
+    - automation.turn_off_lounge_lights_at_11pm
+    - automation.xmas_lights_on
+    - automation.xmas_lights_off
+    - automation.xmas_lights_on_if_home
+
+autos_lighting_delayed:
+  name: Delayed Lighting Automation
+  entities:
+    - input_number.lighting_downstairs_delay_day
+    - input_number.lighting_downstairs_delay_night
+    - automation.lounge_lights_on_when_motion_detected
+    - automation.lounge_lights_off_when_motion_detected
+    - automation.downstairs_lights_on_when_motion_detected
+    - automation.downstairs_lights_off_when_motion_detected
+    - automation.upstairs_lights_on_when_motion_detected
+    - automation.upstairs_lights_off_when_motion_detected
+
+autos_heating:
+  name: Heating Automation
+  entities:
+    - automation.turn_on_heating_if_anyone_home
+    - automation.turn_off_heating_if_noone_home
+    - automation.warm_towels
+    - automation.boost_heating_off
+    - automation.boost_heating_on
+
+autos_other:
+  name: Other Automation
+  entities:
+    - automation.turn_on_radio2_in_kitchen_in_the_morning
+    - automation.automatic_theme_change
+    - automation.turn_on_christmas_songs_in_house_on_25th_dec
+
+autos_holiday_mode:
+  name: Holiday Mode automations
+  entities:
+    - automation.turn_on_all_automations_when_not_on_holiday
+    - automation.turn_off_all_automations_when_on_holiday
+
+autos_alarm:
+  name: House Alarm
+  entities:
+    - automation.autoset_alarm
+    - automation.cancel_alarm_if_home
+
+autos_gym:
+  name: Gym Fan Control
+  entities:
+    - automation.turn_off_gym_fan_when_temp_too_low
+    - automation.turn_on_gym_fan_when_temp_too_high
+
+## Groups - OTHER #################################################
+#-----------------------------------------------------------------#
+
+
+travel:
+  name: 'Travel'
+  entities:
+    - sensor.becks_commute_to_work
+    - sensor.becks_time_to_home
+    - sensor.ross_time_to_home
+
+boost_nest:
+  name: 'Heating Boost'
+  entities:
+    - input_boolean.boost_nest
+    - input_number.boost_heating
+    - input_number.towel_warmer
+
+
+holiday:
+  name: Holidays
+  entities:
+    - input_boolean.holiday_mode
+
+daily_2d_forecast:
+  name: '2-day Forecast'
+  entities:
+    - sensor.pws_weather_1d_metric
+    - sensor.pws_weather_2d_metric
+    
+daily_4d_forecast:
+  name: '4-day Forecast'
+  entities:
+    - sensor.pws_weather_1d_metric
+    - sensor.pws_weather_1n_metric
+    - sensor.pws_weather_2d_metric
+    - sensor.pws_weather_2n_metric
+    - sensor.pws_weather_3d_metric
+    - sensor.pws_weather_3n_metric
+    - sensor.pws_weather_4d_metric
+    - sensor.pws_weather_4n_metric
+
+internal_temps:
+  name: Temperature
+  entities:
+    - sensor.kitchen_temperature
+    - sensor.downstairs_temperature
+    - sensor.upstairs_temperature
+    - sensor.lounge_temperature
+    - sensor.gym_temperature
+    - switch.gym_fan
+    - switch.gym_floor_fan
+
+sensor_battery_levels:
+  name: Sensor Battery Levels
+  entities:
+    - sensor.kitchen_sensor_battery
+    - sensor.downstairs_sensor_battery
+    - sensor.upstairs_sensor_battery
+    - sensor.lounge_sensor_battery
+    - sensor.gym_sensor_battery
+
+sensor_lux_levels:
+  name: Sensor Lux Levels
+  entities:
+    - sensor.kitchen_lux
+    - sensor.downstairs_lux
+    - sensor.upstairs_lux
+    - sensor.lounge_lux
+    - sensor.gym_lux
+
+sensor_motion:
+  name: Motion Detection
+  entities:
+    - binary_sensor.kitchen_motion
+    - binary_sensor.downstairs_motion
+    - binary_sensor.upstairs_motion
+    - binary_sensor.lounge_motion
+    - binary_sensor.gym_motion
+
+alarm:
+  name: House alarm
+  entities:
+    - input_boolean.alarm
+    - binary_sensor.kitchen_motion
+    - binary_sensor.downstairs_motion
+    - binary_sensor.upstairs_motion
+    - binary_sensor.lounge_motion
+    - binary_sensor.gym_motion
