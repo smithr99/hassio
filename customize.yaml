@@ -81,8 +81,6 @@ sensor.school_meals_main_course:
   icon: mdi:food
 sensor.school_meals_dessert:
   icon: mdi:food-apple
-sensor.school_calendar:
-  icon: mdi:calendar-text
 sensor.gym_temperature:
   friendly_name: 'Gym'
   icon: mdi:temperature-celsius
@@ -101,8 +99,6 @@ sensor.lounge_temperature:
 sensor.bedroom_temperature:
   friendly_name: 'Bedroom'
   icon: mdi:temperature-celsius
-sensor.school_meals_date:
-  icon: mdi:calendar
 sensor.gym_sensor_battery:
   icon: mdi:battery-charging
   friendly_name: 'Gym Sensor Battery'
@@ -160,6 +156,12 @@ sensor.bedroom_lux:
 sensor.becks_commute_time:
   friendly_name: 'Becks work commute'
   icon: mdi:road-variant
+sensor.becks:
+  friendly_name: 'Becks'
+  entity_picture: /local/images/becks1.jpg
+sensor.ross:
+  friendly_name: 'Ross'
+  entity_picture: /local/images/ross1.jpg
 
 #### Cameras #################################################################################################
 #------------------------------------------------------------------------------------------------------------#
@@ -169,6 +171,23 @@ camera.becks_location:
   friendly_name: "Where's Becks?"
 camera.ross_location:
   friendly_name: "Where's Ross?"
+
+
+
+#### Calendars ###############################################################################################
+#------------------------------------------------------------------------------------------------------------#
+sensor.recycling_bluebin_pickup_day:
+  friendly_name: Blue Bin
+  entity_picture: /local/images/bin_blue3.png
+sensor.recycling_redbin_pickup_day:
+  friendly_name: Red Bin
+  entity_picture: /local/images/bin_red2.png
+sensor.recycling_greenbin_pickup_day:
+  friendly_name: Green Bin
+  entity_picture: /local/images/bin_green2.png
+sensor.recycling_paper_pickup_day:
+  friendly_name: Paper
+  entity_picture: /local/images/paper1.png
 
 
 
@@ -193,8 +212,7 @@ input_boolean.movie_mode:
 
 #### Groups ##################################################################################################
 #------------------------------------------------------------------------------------------------------------#
-group.school_meals:
-  friendly_name: 'School Meals'
+
 
 
 

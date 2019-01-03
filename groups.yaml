@@ -210,7 +210,13 @@ autos_gym:
 
 ## Groups - OTHER #################################################
 #-----------------------------------------------------------------#
-
+recycling:
+  name: 'Recycling'
+  entities:
+    - calendar.recycling_bluebin
+    - calendar.recycling_greenbin
+    - calendar.recycling_paper
+    - calendar.recycling_redbin
 
 travel:
   name: 'Travel'

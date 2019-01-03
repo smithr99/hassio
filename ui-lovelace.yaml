@@ -1,3 +1,7 @@
+resources:
+  - url: /local/monster-card.js?v=1
+    type: js
+
 title: Lanchester
 views:
 ######################################################################
@@ -18,18 +22,29 @@ views:
         cards: 
           - type: vertical-stack
             cards:
-              - type: horizontal-stack
-                cards:
-                  - type: picture-glance
-                    title: Becks
-                    image: /local/images/becks1.jpg
-                    entities:
-                      - sensor.becks
-                  - type: picture-glance
-                    title: Ross
-                    image: /local/images/ross1.jpg
-                    entities:
-                      - sensor.ross
+              - type: "custom:monster-card"
+                show_empty: false
+                card:
+                  type: entities
+                  title: Family
+                  show_header_toggle: false
+                filter:
+                  include:
+                    - entity_id: sensor.becks
+                    - entity_id: sensor.ross
+                  exclude:
+                    - state: 'Home'
+              - type: "custom:monster-card"
+                show_empty: false
+                card:
+                  type: glance
+                  title: Todays Recycling
+                  show_header_toggle: false
+                filter:
+                  include:
+                    - domain: sensor
+                      state: 'TODAY'
+                      state: 'TOMORROW'
               - type: entities
                 title: Holidays
                 show_header_toggle: false
@@ -278,9 +293,23 @@ views:
           - sensor.pws_weather_3d_metric
           - sensor.pws_weather_3n_metric
           - sensor.pws_weather_4d_metric
-          - sensor.pws_weather_4n_metric
+          - sensor.pws_weather_4n_metric            
 
-    
+
+##  RECYCLING  #################################
+################################################ 
+
+  - icon: mdi:trash-can-outline
+    id: recycling
+    cards:
+      - type: entities
+        title: Recycling
+        show_header_toggle: false
+        entities:
+          - sensor.recycling_bluebin_pickup_day
+          - sensor.recycling_paper_pickup_day
+          - sensor.recycling_greenbin_pickup_day
+          - sensor.recycling_redbin_pickup_day
           
           
 ######################################################################

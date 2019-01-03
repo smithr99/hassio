@@ -38,14 +38,14 @@
 - platform: google_geocode
   name: Ross
   origin: device_tracker.google_maps_118445798565592098278
-  options: street, city
+  options: street, postal_town
   display_zone: show
   api_key: !secret google_geocode
   
 - platform: google_geocode
   name: Becks
   origin: device_tracker.iphone
-  options: street, city
+  options: street, postal_town
   display_zone: show
   api_key: !secret google_geocode   
   
@@ -326,6 +326,61 @@
   
 #### Other ###################################################################################################
 #------------------------------------------------------------------------------------------------------------#
+
+- platform: template
+  sensors:
+    recycling_bluebin_pickup_day:
+      friendly_name: Blue Bin Pickup Day
+      value_template: >
+        {% set pickupday = strptime(states.calendar.recycling_bluebin.attributes.start_time, "%Y-%m-%d %H:%M:%S").strftime("%A") %}
+        {% set pickupdaydate = strptime(states.calendar.recycling_bluebin.attributes.start_time, "%Y-%m-%d %H:%M:%S").strftime("%A %d %b") %}
+        {% if pickupday == now().strftime("%A") %}
+          TODAY
+        {% elif pickupday == (as_timestamp(now())+ (86400)) | timestamp_custom("%A",true) %}
+          TOMORROW
+        {% else %}
+          {{ pickupdaydate }}
+        {% endif %}
+    recycling_redbin_pickup_day:
+      friendly_name: Red Bin Pickup Day
+      value_template: >
+        {% set pickupday = strptime(states.calendar.recycling_redbin.attributes.start_time, "%Y-%m-%d %H:%M:%S").strftime("%A") %}
+        {% set pickupdaydate = strptime(states.calendar.recycling_redbin.attributes.start_time, "%Y-%m-%d %H:%M:%S").strftime("%A %d %b") %}
+        {% if pickupday == now().strftime("%A") %}
+          TODAY
+        {% elif pickupday == (as_timestamp(now())+ (86400)) | timestamp_custom("%A",true) %}
+          TOMORROW
+        {% else %}
+          {{ pickupdaydate }}
+        {% endif %}  
+    recycling_greenbin_pickup_day:
+      friendly_name: Green Bin Pickup Day
+      value_template: >
+        {% set pickupday = strptime(states.calendar.recycling_greenbin.attributes.start_time, "%Y-%m-%d %H:%M:%S").strftime("%A") %}
+        {% set pickupdaydate = strptime(states.calendar.recycling_greenbin.attributes.start_time, "%Y-%m-%d %H:%M:%S").strftime("%A %d %b") %}
+        {% if pickupday == now().strftime("%A") %}
+          TODAY
+        {% elif pickupday == (as_timestamp(now())+ (86400)) | timestamp_custom("%A",true) %}
+          TOMORROW
+        {% else %}
+          {{ pickupdaydate }}
+        {% endif %}  
+    recycling_paper_pickup_day:
+      friendly_name: Paper Pickup Day
+      value_template: >
+        {% set pickupday = strptime(states.calendar.recycling_paper.attributes.start_time, "%Y-%m-%d %H:%M:%S").strftime("%A") %}
+        {% set pickupdaydate = strptime(states.calendar.recycling_paper.attributes.start_time, "%Y-%m-%d %H:%M:%S").strftime("%A %d %b") %}
+        {% if pickupday == now().strftime("%A") %}
+          TODAY
+        {% elif pickupday == (as_timestamp(now())+ (86400)) | timestamp_custom("%A",true) %}
+          TOMORROW
+        {% else %}
+          {{ pickupdaydate }}
+        {% endif %}    
+  
+        
+        
+
 - platform: fitbit
   clock_format: 24H
   monitored_resources:
