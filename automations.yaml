@@ -4,7 +4,7 @@
 ## Lighting - AUTONOMOUS ##########################################
 #-----------------------------------------------------------------#
 - alias: 'Study light on when PC on'
-  initial_state: false
+  initial_state: true
   trigger:
     - platform: state
       entity_id: device_tracker.ping_study_pc
@@ -17,7 +17,7 @@
       entity_id: switch.christmas_tree
 
 - alias: 'Study light off when PC off'
-  initial_state: false
+  initial_state: true
   trigger:
     - platform: state
       entity_id: device_tracker.ping_study_pc
@@ -182,8 +182,8 @@
   action:
     - service: switch.turn_on
       entity_id: switch.gym_fan
- #   - service: switch.turn_on
-#      entity_id: switch.gym_floor_fan
+    - service: switch.turn_on
+      entity_id: switch.gym_floor_fan
 
 - alias: 'Turn off gym fan when temp too low'
   initial_state: true
@@ -194,8 +194,8 @@
   action:
     - service: switch.turn_off
       entity_id: switch.gym_fan
-#    - service: switch.turn_off
- #     entity_id: switch.gym_floor_fan
+    - service: switch.turn_off
+      entity_id: switch.gym_floor_fan
 
 ## Lighting - BEDROOM ##############################################
 - alias: 'Bedroom lights on when motion detected'
@@ -471,7 +471,7 @@
       
 #### XMAS #######################################################      
 - alias: 'Xmas Lights Off'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: time
       at: '23:00:00'
@@ -482,7 +482,7 @@
       entity_id: switch.gym_floor_fan
       
 - alias: 'Outdoor Xmas Lights OFF'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: sun
       event: sunrise
@@ -492,7 +492,7 @@
       entity_id: switch.gym_floor_fan   
       
 - alias: 'Xmas Lights On'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: sun
       event: sunset
@@ -504,7 +504,7 @@
       entity_id: switch.gym_floor_fan      
       
 - alias: 'Xmas Lights ON if home'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: time
       at: '11:00:00'

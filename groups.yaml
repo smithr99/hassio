@@ -21,10 +21,14 @@ lounge:
     - light.lounge_lamp_table
     - light.tv
     - light.hue_color_lamp_1
-    - switch.christmas_tree
     - input_boolean.disco_mode
     - input_boolean.movie_mode
     - sensor.lounge_lux
+    
+study:
+  name: Study
+  entities:
+    - switch.christmas_tree
 
 upstairs_hallway:
   name: Upstairs Hallway

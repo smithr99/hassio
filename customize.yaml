@@ -34,11 +34,15 @@ light.hue_ambiance_candle_2:
   icon: mdi:lamp
   friendly_name: 'Bedroom Ross'
 switch.christmas_tree:
-  icon: mdi:pine-tree
-  friendly_name: 'Christmas Tree'
+  #icon: mdi:pine-tree
+  #friendly_name: 'Christmas Tree'
+  icon: mdi:lamp
+  friendly_name: 'Study Lamp'
 switch.gym_floor_fan:
-  icon: mdi:snowflake
-  friendly_name: 'Outside Christmas Lights'
+  #icon: mdi:snowflake
+  #friendly_name: 'Outside Christmas Lights'
+  icon: mdi:fan
+  friendly_name: 'Gym Floor Fan'
 
 #### Sensors #################################################################################################
 #------------------------------------------------------------------------------------------------------------#

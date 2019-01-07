@@ -429,6 +429,7 @@ views:
         show_header_toggle: false
         entities:
           - automation.xmas_lights_off
+          - automation.outdoor_xmas_lights_off
           - automation.xmas_lights_on
           - automation.xmas_lights_on_if_home
           - automation.turn_on_christmas_songs_in_house_on_25th_dec
