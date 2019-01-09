@@ -62,6 +62,7 @@ views:
                 entities:
                   - media_player.kitchen
                   - sensor.kitchen_temperature
+                  - group.people
                 image: /local/images/kitchen3.jpg      
               - type: horizontal-stack
                 cards:  
@@ -84,11 +85,11 @@ views:
               - type: picture-glance
                 title: Lounge
                 entities:
-                  #- light.lounge_lamp_door
+                  - light.lounge_lamp_door
                   - light.lounge_lamp_table
                   - light.tv
                   - light.hue_color_lamp_1
-                  - switch.christmas_tree
+                  #- switch.christmas_tree
                   - media_player.lounge
                   - sensor.lounge_temperature
                 image: /local/images/living_room2.jpg   
@@ -102,7 +103,8 @@ views:
                   - type: picture-glance
                     title: Garden
                     entities:
-                      - switch.gym_floor_fan
+                      #- switch.gym_floor_fan
+                      - sensor.pws_temp_c
                     camera_image: camera.rear_elevation 
           
 ##  Third Column  ##################################        
@@ -210,17 +212,18 @@ views:
           - light.lounge_lamp_table
           - light.tv
           - light.hue_color_lamp_1
-          - switch.christmas_tree
+          #- switch.christmas_tree
           - sensor.lounge_lux
-      - type: entities
-        title: Christmas
-        entities:
-          - switch.gym_floor_fan
-          - switch.christmas_tree
 #      - type: entities
-#        title: Study
+#        title: Christmas
 #        entities:
-
+#          - switch.gym_floor_fan
+#          - switch.christmas_tree
+      - type: entities
+        title: Study
+        show_header_toggle: false
+        entities:
+          - switch.christmas_tree
             
 
 ##  ALARM  #####################################

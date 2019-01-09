@@ -112,6 +112,14 @@ person_guests:
     - device_tracker.tonysphone
     - device_tracker.jensiphone
     - device_tracker.404e3684c25c
+    - device_tracker.georgiaesiphone
+    - device_tracker.alison
+    - device_tracker.lexsiphone
+
+family:    
+  entities:
+    - group.person_ross
+    - group.person_becks
 
 people:
   entities:
