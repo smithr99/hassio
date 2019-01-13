@@ -60,6 +60,7 @@ logger:
   default: info
   logs:
     urllib3.connectionpool: critical
+    #homeassistant.components.sensor: debug
 
 recorder:
   purge_keep_days: 7

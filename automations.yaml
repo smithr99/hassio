@@ -636,7 +636,7 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: group.people
+      entity_id: group.family
       to: 'home'
   action:
     - service: script.turn_on
@@ -646,7 +646,7 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: group.people
+      entity_id: group.family
       to: 'not_home'
   action:
     - service: script.turn_on

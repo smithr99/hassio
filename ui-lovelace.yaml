@@ -18,38 +18,39 @@ views:
     
 ##  First Column  ##################################
  
-      - type: horizontal-stack
-        cards: 
-          - type: vertical-stack
-            cards:
-              - type: "custom:monster-card"
-                show_empty: false
-                card:
-                  type: entities
-                  title: Family
-                  show_header_toggle: false
-                filter:
-                  include:
-                    - entity_id: sensor.becks
-                    - entity_id: sensor.ross
-                  exclude:
-                    - state: 'Home'
-              - type: "custom:monster-card"
-                show_empty: false
-                card:
-                  type: glance
-                  title: Todays Recycling
-                  show_header_toggle: false
-                filter:
-                  include:
-                    - domain: sensor
-                      state: 'TODAY'
-                      state: 'TOMORROW'
-              - type: entities
-                title: Holidays
-                show_header_toggle: false
-                entities:
-                  - input_boolean.holiday_mode
+#      - type: horizontal-stack
+#        cards: 
+#          - type: vertical-stack
+#            cards:
+#              - type: "custom:monster-card"
+#                show_empty: false
+#                card:
+#                  type: entities
+#                  title: Family
+#                  show_header_toggle: false
+#                filter:
+#                  include:
+#                    - entity_id: sensor.becks
+#                    - entity_id: sensor.ross
+#                  exclude:
+#                    - state: 'Home'
+#              - type: "custom:monster-card"
+#                show_empty: false
+#                card:
+#                  type: glance
+#                  title: Todays Recycling
+#                  show_header_toggle: false
+#                filter:
+#                  include:
+#                    - domain: sensor
+#                      state: 'TODAY'
+#                      state: 'TOMORROW'
+#              - type: entities
+#                title: Holidays
+#                show_header_toggle: false
+#                entities:
+#                  - input_boolean.holiday_mode
+#                  - group.family
           
 ##  Second Column  #################################         
           
@@ -62,7 +63,6 @@ views:
                 entities:
                   - media_player.kitchen
                   - sensor.kitchen_temperature
-                  - group.people
                 image: /local/images/kitchen3.jpg      
               - type: horizontal-stack
                 cards:  
@@ -95,11 +95,11 @@ views:
                 image: /local/images/living_room2.jpg   
               - type: horizontal-stack
                 cards:
-                  - type: picture-glance
-                    title: Driveway
-                    entities:
-                      - sensor.pws_temp_c
-                    camera_image: camera.garage_front
+#                  - type: picture-glance
+#                    title: Driveway
+#                    entities:
+#                      - sensor.pws_temp_c
+#                    camera_image: camera.garage_front
                   - type: picture-glance
                     title: Garden
                     entities:
