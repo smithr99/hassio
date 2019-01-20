@@ -61,6 +61,8 @@ logger:
   logs:
     urllib3.connectionpool: critical
     #homeassistant.components.sensor: debug
+    #homeassistant.components.automation: debug
+    #homeassistant.helpers.script: debug
 
 recorder:
   purge_keep_days: 7
@@ -107,11 +109,39 @@ media_player:
     hosts:
       - 10.0.30.65
       - 10.0.30.66
-
+  - platform: plex
+    entity_namespace: 'plex'
+    scan_interval: 5
+    include_non_clients: true
 konnected:
   access_token: !secret konnected_token
   devices:
     - id: !secret konnected_id1
+      binary_sensors:
+        - zone: 1
+          type: motion
+          name: 'konnected_hallway'
+        - zone: 3
+          type: motion
+          name: 'konnected_lounge'    
+        - zone: 5
+          type: motion
+          name: 'konnected_kitchen'           
+    - id: !secret konnected_id2
+      binary_sensors:
+        - zone: 2
+          type: motion
+          name: 'konnected_study'
+        - zone: 4
+          type: motion
+          name: 'konnected_utility'    
+        - zone: 6
+          type: motion
+          name: 'konnected_landing'
+      switches:
+        - zone: out
+          name: 'konnected_buzzer'
+          
       
       
 #### Cloud Services ##########################################################################################

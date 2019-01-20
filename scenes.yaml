@@ -28,18 +28,35 @@
   entities:
     light.lounge_lamp_door:
       state: on
-      brightness_pct: 60
+      brightness_pct: 86
     light.lounge_lamp_table:
       state: on
-      brightness_pct: 60
+      brightness_pct: 86
     light.tv:
       state: on
-      xy_color: [0.158, 0.089]
+      xy_color: [0.158,0.134]
       brightness_pct: 50
     light.hue_color_lamp_1:
       state: on
-      xy_color: [0.158, 0.089]
+      xy_color: [0.158,0.134]
       brightness_pct: 50
+      
+- name: 'Movie Mode - Paused'
+  entities:
+    light.lounge_lamp_door:
+      state: on
+      brightness_pct: 100
+    light.lounge_lamp_table:
+      state: on
+      brightness_pct: 100
+    light.tv:
+      state: on
+      xy_color: [0.158,0.134]
+      brightness_pct: 75
+    light.hue_color_lamp_1:
+      state: on
+      xy_color: [0.158,0.134]
+      brightness_pct: 75
 
 - name: 'Day - Lounge'
   entities:

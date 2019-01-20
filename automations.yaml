@@ -3,32 +3,6 @@
 
 ## Lighting - AUTONOMOUS ##########################################
 #-----------------------------------------------------------------#
-- alias: 'Study light on when PC on'
-  initial_state: true
-  trigger:
-    - platform: state
-      entity_id: device_tracker.ping_study_pc
-      to: 'home'
-  condition:
-    - condition: sun
-      after: sunset
-  action:
-    - service: switch.turn_on
-      entity_id: switch.christmas_tree
-
-- alias: 'Study light off when PC off'
-  initial_state: true
-  trigger:
-    - platform: state
-      entity_id: device_tracker.ping_study_pc
-      to: 'not_home'
-  condition:
-    - condition: state
-      entity_id: switch.christmas_tree
-      state: 'on'
-  action:
-    - service: switch.turn_off
-      entity_id: switch.christmas_tree
 
 - alias: 'Turn on upstairs lights at sunset'
   initial_state: True
@@ -42,7 +16,7 @@
   action:
     - service: scene.turn_on
       data:
-        entity_id: scene.evening__upstairs
+        entity_id: scene.evening_upstairs
 
 - alias: 'Dim lights at kids bedtime'
   initial_state: True
@@ -71,12 +45,10 @@
     - condition: state
       entity_id: group.upstairs_hallway
       state: 'on'
-    - condition: sun
-      before: sunrise
   action:
     - service: scene.turn_on
       data:
-        entity_id: scene.day__upstairs
+        entity_id: scene.day_upstairs
 
 - alias: 'Turn off upstairs lights at sunrise'
   initial_state: true
@@ -90,7 +62,7 @@
         transition: 150
 
 - alias: 'Turn off bedroom lights'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: time
       at: '09:00:00'
@@ -108,6 +80,37 @@
     - service: light.turn_off
       data:
         entity_id: group.lounge
+        
+- alias: 'Turn off lounge lights at 12pm'
+  initial_state: true
+  trigger:
+    - platform: time
+      at: '00:00:00'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: group.lounge
+        
+- alias: 'Turn off lounge lights at 1am'
+  initial_state: true
+  trigger:
+    - platform: time
+      at: '01:00:00'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: group.lounge
+        
+- alias: 'Turn off lounge lights at 2am'
+  initial_state: true
+  trigger:
+    - platform: time
+      at: '02:00:00'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: group.lounge
+        
 
 - alias: 'Turn lounge lights on at sunset if someone is home'
   initial_state: false
@@ -199,7 +202,7 @@
 
 ## Lighting - BEDROOM ##############################################
 - alias: 'Bedroom lights on when motion detected'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: state
       entity_id: binary_sensor.bedroom_motion
@@ -209,13 +212,13 @@
       data_template: 
         entity_id: >
           {% if is_state('sun.sun', 'above_horizon') %}
-            scene.day__bedroom
+            scene.day_bedroom
           {% else %}
-            scene.night__bedroom
+            scene.night_bedroom
           {% endif %}    
         
 - alias: 'Bedroom dimmer switch increase - Becks'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: state
       entity_id: sensor.bedroom_dimmer_last_update, sensor.bedroom_dimmer_status
@@ -237,7 +240,7 @@
         brightness: '{{states.light.hue_ambiance_candle_1.attributes.brightness + 25}}'
         
 - alias: 'Bedroom dimmer switch increase - Ross'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: state
       entity_id: sensor.bedroom_dimmer_last_update, sensor.bedroom_dimmer_status
@@ -259,7 +262,7 @@
         brightness: '{{states.light.hue_ambiance_candle_2.attributes.brightness + 25}}'
       
 - alias: 'Bedroom lights off Becks'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: state
       entity_id: sensor.bedroom_dimmer_last_update, sensor.bedroom_dimmer_status
@@ -274,7 +277,7 @@
       entity_id: light.hue_ambiance_candle_1        
     
 - alias: 'Bedroom lights off Becks'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: state
       entity_id: sensor.bedroom_dimmer_last_update, sensor.bedroom_dimmer_status
@@ -293,16 +296,16 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: binary_sensor.upstairs_motion
+      entity_id: binary_sensor.konnected_landing
       to: 'on'
   action:
     - service: scene.turn_on
       data_template: 
         entity_id: >
           {% if now().hour >= 8 and now().hour < 17 %}
-            scene.day__upstairs
+            scene.day_upstairs
           {% elif now().hour >= 17 and now().hour < 20 %}
-            scene.evening__upstairs
+            scene.evening_upstairs
           {% else %}          
           {% endif %}
 
@@ -310,10 +313,10 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: binary_sensor.upstairs_motion
+      entity_id: binary_sensor.konnected_landing
       to: 'off'
       for:
-        seconds: 45
+        minutes: 5
   condition:
     - condition: time
       after: '08:00:00'
@@ -328,28 +331,28 @@
   initial_state: 'on'
   trigger:
     - platform: state
-      entity_id: binary_sensor.downstairs_motion
+      entity_id: binary_sensor.konnected_hallway
       to: 'on'
   action:
     - service: scene.turn_on
       data_template: 
         entity_id: >
           {% if now().hour >= 6 and now().hour < 17 %}
-            scene.day__downstairs
+            scene.day_downstairs
           {% elif now().hour >= 17 and now().hour < 22 %}
-            scene.evening__downstairs
+            scene.evening_downstairs
           {% else %}
-            scene.night__downstairs
+            scene.night_downstairs
           {% endif %}
     
 - alias: 'Downstairs lights off after motion detected'
   initial_state: true
   trigger:
     - platform: state
-      entity_id: binary_sensor.downstairs_motion
+      entity_id: binary_sensor.konnected_hallway
       to: 'off'
       for:
-        minutes: 3
+        minutes: 5
   action:
     - service: light.turn_off
       data:
@@ -361,16 +364,16 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: binary_sensor.lounge_motion
+      entity_id: binary_sensor.konnected_lounge
       to: 'on'
   action:
     - service: scene.turn_on
       data_template: 
         entity_id: >
           {% if is_state('sun.sun', 'above_horizon') %}
-            scene.day__lounge
+            scene.day_lounge
           {% else %}
-            scene.evening__lounge
+            scene.evening_lounge
           {% endif %}
 
           
@@ -378,7 +381,7 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: binary_sensor.lounge_motion
+      entity_id: binary_sensor.konnected_lounge
       to: 'off'
       for:
         minutes: 60
@@ -419,9 +422,9 @@
       data_template: 
         entity_id: >
           {% if is_state('sun.sun', 'above_horizon') %}
-            scene.day__lounge
+            scene.day_lounge
           {% else %}
-            scene.evening__lounge
+            scene.evening_lounge
           {% endif %}
       
 - alias: 'Movie Mode ON'
@@ -430,6 +433,9 @@
     - platform: state
       entity_id: input_boolean.movie_mode
       to: 'on'
+    - platform: state
+      entity_id: media_player.plex_aftn
+      to: 'playing'
   condition:
     - condition: state
       entity_id: sun.sun
@@ -438,7 +444,7 @@
     - service: homeassistant.turn_off
       entity_id: automation.lounge_lights_on_when_motion_detected_night
     - service: scene.turn_on
-      entity_id: scene.movie_mode__lounge
+      entity_id: scene.movie_mode_lounge
       
 - alias: 'Movie Mode OFF'
   initial_state: true
@@ -446,6 +452,9 @@
     - platform: state
       entity_id: input_boolean.movie_mode
       to: 'off'
+    - platform: state
+      entity_id: media_player.plex_aftn
+      to: 'unavailable'
   condition:
     - condition: state
       entity_id: sun.sun
@@ -454,7 +463,18 @@
     - service: homeassistant.turn_on
       entity_id: automation.lounge_lights_on_when_motion_detected_night
     - service: scene.turn_on
-      entity_id: scene.evening__lounge
+      entity_id: scene.evening_lounge
+
+- alias: 'Movie Mode PAUSED'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: media_player.plex_aftn
+      to: 'paused'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.movie_mode_paused
+      
       
 - alias: 'reactivate normal lighting after movie mode'
   initial_state: true
@@ -467,8 +487,36 @@
   action:
     - service: homeassistant.turn_off
       entity_id: input_boolean.movie_mode
+    - service: homeassistant.turn_on
+      entity_id: automation.lounge_lights_on_when_motion_detected_night
+
+
+## Lighting - STUDY ###############################################      
       
-      
+- alias: 'Study lights on when motion detected'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.konnected_study
+      to: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.christmas_tree  
+
+          
+- alias: 'Study lights off after motion detected'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.konnected_study
+      to: 'off'
+      for:
+        minutes: 15
+  action:
+    - service: switch.turn_off
+      entity_id: switch.christmas_tree 
+
+     
 #### XMAS #######################################################      
 - alias: 'Xmas Lights Off'
   initial_state: false
@@ -748,15 +796,8 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: group.person_ross
+      entity_id: group.people_alarm
       to: 'not_home'
-    - platform: state
-      entity_id: group.person_becks
-      to: 'not_home'
-  condition:
-    - condition: state
-      entity_id: group.people
-      state: 'not_home'
   action:
     - service: input_boolean.turn_on
       entity_id: input_boolean.alarm
@@ -765,10 +806,7 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: group.person_ross
-      to: 'home'
-    - platform: state
-      entity_id: group.person_becks
+      entity_id: group.people_alarm
       to: 'home'
   action:
     - service: input_boolean.turn_off
@@ -778,7 +816,7 @@
   initial_state: true
   trigger:
     - platform: time
-      at: '11:00:00'
+      at: '12:30:00'
   condition:
     condition: time
     weekday:
@@ -867,7 +905,7 @@
     - service: notify.pushbullet
       data_template:
         title: "Alarm Triggered"
-        message: "House alarm has been set off"
+        message: "House alarm has been set off at {{ states.input_select.last_room_with_motion.state }}"
     - service: notify.pushbullet
       data:
         data:

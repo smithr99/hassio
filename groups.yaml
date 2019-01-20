@@ -115,12 +115,21 @@ person_guests:
     - device_tracker.georgiaesiphone
     - device_tracker.alison
     - device_tracker.lexsiphone
+    - device_tracker.lyndas_iphone
+    - device_tracker.adamsworkphone
 
 family:    
   entities:
     - group.person_ross
     - group.person_becks
 
+people_alarm:
+  entities:
+    - group.person_ross
+    - group.person_becks
+    - device_tracker.lyndas_iphone
+    - device_tracker.tonysphone
+    
 people:
   entities:
     - group.person_ross

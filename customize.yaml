@@ -66,25 +66,6 @@ sensor.hallway_thermostat_humidity:
   friendly_name: 'Nest Humidity'
   icon: mdi:water-percent
   hidden: false
-sensor.battery_becksiphone:
-  friendly_name: "Becks' iPhone"
-  hidden: false
-sensor.battery_rossphone:
-  friendly_name: "Ross' Phone"
-  icon: mdi:battery-plus
-  hidden: false
-sensor.charging_rossphone:
-  friendly_name: Ross Charging Status
-  icon: mdi:battery-charging
-  hidden: false
-sensor.charging_becksiphone:
-  friendly_name: Becks Charging Status
-  icon: mdi:battery-charging
-  hidden: false
-sensor.school_meals_main_course:
-  icon: mdi:food
-sensor.school_meals_dessert:
-  icon: mdi:food-apple
 sensor.gym_temperature:
   friendly_name: 'Gym'
   icon: mdi:temperature-celsius
@@ -139,6 +120,24 @@ binary_sensor.lounge_motion:
 binary_sensor.bedroom_motion:
   icon: mdi:run-fast
   friendly_name: 'Bedroom Motion Sensor'
+binary_sensor.konnected_hallway:
+  icon: mdi:run-fast
+  friendly_name: 'Hallway Motion'
+binary_sensor.konnected_kitchen:
+  icon: mdi:run-fast
+  friendly_name: 'Kitchen Motion'
+binary_sensor.konnected_landing:
+  icon: mdi:run-fast
+  friendly_name: 'Landing Motion'
+binary_sensor.konnected_lounge:
+  icon: mdi:run-fast
+  friendly_name: 'Lounge Motion'
+binary_sensor.konnected_study:
+  icon: mdi:run-fast
+  friendly_name: 'Study Motion'
+binary_sensor.konnected_utility:
+  icon: mdi:run-fast
+  friendly_name: 'Utility Motion'
 sensor.gym_lux:
   icon: mdi:led-on
   friendly_name: 'Gym Lux'
@@ -231,7 +230,7 @@ switch.gym_fan:
 climate.hallway:
   icon: mdi:thermometer
   friendly_name: 'Nest Thermostat'
-media_player.aftn:
+media_player.plex_aftn:
   icon: mdi:amazon
   friendly_name: 'Amazon Fire TV Lounge'
 media_player.samsung_led48_ue48h6700:

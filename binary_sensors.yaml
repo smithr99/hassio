@@ -36,3 +36,21 @@
   value_template: '{{ value_json.state.presence }}'
   scan_interval: 1
   name: 'Bedroom Motion'
+  
+- platform: bayesian
+  name: Bedtime
+  prior: 0.25
+  probability_threshold: 0.8
+  observations:
+    - entity_id: 'sun.sun'
+      prob_given_true: 0.7
+      platform: 'state'
+      to_state: 'below_horizon'
+    - entity_id: 'sensor.last_motion'
+      prob_given_true: 0.9
+      platform: 'state'
+      to_state: 'Bedroom Motion Sensor'  
+    - entity_id: 'sensor.both_phones_charging'
+      prob_given_true: 0.8
+      platform: 'state'
+      to_state: 'true'

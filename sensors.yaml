@@ -2,6 +2,8 @@
 
 #### Travel ##################################################################################################
 #------------------------------------------------------------------------------------------------------------#
+
+## Phone Status ################################################### 
 - platform: template
   sensors:
     ross_loc:
@@ -10,7 +12,121 @@
     becks_loc:
       value_template: >
         {{ states.device_tracker.iphone.attributes.latitude }},{{ states.device_tracker.iphone.attributes.longitude }}
+    ross_phone_battery:
+      friendly_name: 'Ross Phone Battery'
+      unit_of_measurement: '%'
+      value_template: >
+        {{ states.device_tracker.google_maps_118445798565592098278.attributes.battery_level | int }}
+      icon_template: >
+        {% set battery = states.device_tracker.google_maps_118445798565592098278.attributes.battery_level %}
+        {% if states.device_tracker.google_maps_118445798565592098278.attributes.battery_charging | string == 'False' %}
+          {% set batterycharging = 0 %}
+        {% else %}
+          {% set batterycharging = 1 %}
+        {% endif %}
+        {% if battery <= 10 and batterycharging == 1 %}
+          mdi:battery-charging-10
+        {% elif battery <= 20 and batterycharging == 1 %}
+          mdi:battery-charging-20
+        {% elif battery <= 30 and batterycharging == 1 %}
+          mdi:battery-charging-30 
+        {% elif battery <= 40 and batterycharging == 1 %}
+          mdi:battery-charging-40 
+        {% elif battery <= 50 and batterycharging == 1 %}
+          mdi:battery-charging-50 
+        {% elif battery <= 60 and batterycharging == 1 %}
+          mdi:battery-charging-60 
+        {% elif battery <= 70 and batterycharging == 1 %}
+          mdi:battery-charging-70 
+        {% elif battery <= 80 and batterycharging == 1 %}
+          mdi:battery-charging-80 
+        {% elif battery <= 90 and batterycharging == 1 %}
+          mdi:battery-charging-90 
+        {% elif battery == 100 and batterycharging == 1 %}
+          mdi:battery-charging-100
+        {% elif battery <= 10 and batterycharging == 0 %}
+          mdi:battery-10
+        {% elif battery <= 20 and batterycharging == 0 %}
+          mdi:battery-20
+        {% elif battery <= 30 and batterycharging == 0 %}
+          mdi:battery-30
+        {% elif battery <= 40 and batterycharging == 0 %}
+          mdi:battery-40
+        {% elif battery <= 50 and batterycharging == 0 %}
+          mdi:battery-50
+        {% elif battery <= 60 and batterycharging == 0 %}
+          mdi:battery-60
+        {% elif battery <= 70 and batterycharging == 0 %}
+          mdi:battery-70
+        {% elif battery <= 80 and batterycharging == 0 %}
+          mdi:battery-80
+        {% elif battery <= 90 and batterycharging == 0 %}
+          mdi:battery-90
+        {% elif battery == 100 and batterycharging == 0 %}
+          mdi:battery-100  
+        {% endif %}
+    becks_phone_battery:
+      friendly_name: 'Becks iPhone Battery'
+      unit_of_measurement: '%'
+      value_template: >
+        {{ states.device_tracker.iphone.attributes.battery | int }}  
+      icon_template: >
+        {% set battery = states.device_tracker.iphone.attributes.battery %}
+        {% if states.device_tracker.iphone.attributes.battery_status | string == 'Charging' %}
+          {% set batterycharging = 1 %}
+        {% else %}
+          {% set batterycharging = 0 %}
+        {% endif %}
+        {% if battery <= 10 and batterycharging == 1 %}
+          mdi:battery-charging-10
+        {% elif battery <= 20 and batterycharging == 1 %}
+          mdi:battery-charging-20
+        {% elif battery <= 30 and batterycharging == 1 %}
+          mdi:battery-charging-30 
+        {% elif battery <= 40 and batterycharging == 1 %}
+          mdi:battery-charging-40 
+        {% elif battery <= 50 and batterycharging == 1 %}
+          mdi:battery-charging-50 
+        {% elif battery <= 60 and batterycharging == 1 %}
+          mdi:battery-charging-60 
+        {% elif battery <= 70 and batterycharging == 1 %}
+          mdi:battery-charging-70 
+        {% elif battery <= 80 and batterycharging == 1 %}
+          mdi:battery-charging-80 
+        {% elif battery <= 90 and batterycharging == 1 %}
+          mdi:battery-charging-90 
+        {% elif battery == 100 and batterycharging == 1 %}
+          mdi:battery-charging-100
+        {% elif battery <= 10 and batterycharging == 0 %}
+          mdi:battery-10
+        {% elif battery <= 20 and batterycharging == 0 %}
+          mdi:battery-20
+        {% elif battery <= 30 and batterycharging == 0 %}
+          mdi:battery-30
+        {% elif battery <= 40 and batterycharging == 0 %}
+          mdi:battery-40
+        {% elif battery <= 50 and batterycharging == 0 %}
+          mdi:battery-50
+        {% elif battery <= 60 and batterycharging == 0 %}
+          mdi:battery-60
+        {% elif battery <= 70 and batterycharging == 0 %}
+          mdi:battery-70
+        {% elif battery <= 80 and batterycharging == 0 %}
+          mdi:battery-80
+        {% elif battery <= 90 and batterycharging == 0 %}
+          mdi:battery-90
+        {% elif battery == 100 and batterycharging == 0 %}
+          mdi:battery-100  
+        {% endif %}        
+    both_phones_charging:
+      value_template: >
+        {% if states.device_tracker.iphone.attributes.battery_status | string == 'Charging' and states.device_tracker.google_maps_118445798565592098278.attributes.battery_charging | string == 'true' %}
+          true
+        {% else %}
+          false
+        {% endif %}
 
+## Waze Travel Times ##############################################         
 - platform: waze_travel_time
   name: "Becks time to home"
   origin: sensor.becks_loc
@@ -48,7 +164,9 @@
   options: street, postal_town
   display_zone: show
   api_key: !secret google_geocode   
-  
+
+
+## Train Timetables ###############################################   
 - platform: uk_transport
   app_id: !secret transportapi_appid
   app_key: !secret transportapi_appkey
@@ -420,7 +538,7 @@
     last_motion:
       friendly_name: 'Last Motion'
       value_template: >-
-        {% set sensors = [states.binary_sensor.upstairs_motion, states.binary_sensor.downstairs_motion, states.binary_sensor.bedroom_motion, states.binary_sensor.kitchen_motion, states.binary_sensor.lounge_motion] %}
+        {% set sensors = [states.binary_sensor.upstairs_motion, states.binary_sensor.downstairs_motion, states.binary_sensor.bedroom_motion, states.binary_sensor.kitchen_motion, states.binary_sensor.lounge_motion, states.binary_sensor.konnected_hallway, states.binary_sensor.konnected_kitchen, states.binary_sensor.konnected_landing, states.binary_sensor.konnected_lounge, states.binary_sensor.konnected_study, states.binary_sensor.konnected_utility] %}
         {% for sensor in sensors %}
           {% if as_timestamp(sensor.last_changed) == as_timestamp(sensors | map(attribute='last_changed') | max) %}
             {{ sensor.name }}
@@ -432,7 +550,7 @@
     last_motion_time:
       friendly_name: 'Time since last motion'
       value_template: >-
-        {% set sensors = [states.binary_sensor.upstairs_motion, states.binary_sensor.downstairs_motion, states.binary_sensor.bedroom_motion, states.binary_sensor.kitchen_motion, states.binary_sensor.lounge_motion] %}
+        {% set sensors = [states.binary_sensor.upstairs_motion, states.binary_sensor.downstairs_motion, states.binary_sensor.bedroom_motion, states.binary_sensor.kitchen_motion, states.binary_sensor.lounge_motion, states.binary_sensor.konnected_hallway, states.binary_sensor.konnected_kitchen, states.binary_sensor.konnected_landing, states.binary_sensor.konnected_lounge, states.binary_sensor.konnected_study, states.binary_sensor.konnected_utility] %}
         {% for sensor in sensors %}
           {% if as_timestamp(sensor.last_changed) == as_timestamp(sensors | map(attribute='last_changed') | max) %}
             {{ now() - sensor.last_changed  }}

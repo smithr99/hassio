@@ -12,7 +12,7 @@ views:
     id: Home
     
     # 100% page width
-    panel: true
+    panel: false
     
     cards:
     
@@ -20,20 +20,24 @@ views:
  
 #      - type: horizontal-stack
 #        cards: 
-#          - type: vertical-stack
-#            cards:
-#              - type: "custom:monster-card"
-#                show_empty: false
-#                card:
-#                  type: entities
-#                  title: Family
-#                  show_header_toggle: false
-#                filter:
-#                  include:
-#                    - entity_id: sensor.becks
-#                    - entity_id: sensor.ross
-#                  exclude:
-#                    - state: 'Home'
+          - type: vertical-stack
+            cards:          
+              - type: entities
+                title: Becks
+                show_header_toggle: false
+                entities:
+                  - sensor.becks
+                  - sensor.becks_commute_to_work
+                  - sensor.becks_time_to_home
+                  - sensor.becks_phone_battery
+              - type: entities
+                title: Ross
+                show_header_toggle: false
+                entities:
+                  - sensor.ross
+                  - sensor.ross_commute_to_work
+                  - sensor.ross_time_to_home
+                  - sensor.ross_phone_battery
 #              - type: "custom:monster-card"
 #                show_empty: false
 #                card:
@@ -45,12 +49,11 @@ views:
 #                    - domain: sensor
 #                      state: 'TODAY'
 #                      state: 'TOMORROW'
-#              - type: entities
-#                title: Holidays
-#                show_header_toggle: false
-#                entities:
-#                  - input_boolean.holiday_mode
-#                  - group.family
+              - type: entities
+                title: Holidays
+                show_header_toggle: false
+                entities:
+                  - input_boolean.holiday_mode
           
 ##  Second Column  #################################         
           
@@ -111,40 +114,12 @@ views:
           
 #      - type: horizontal-stack
 #        cards: 
-          - type: vertical-stack
-            cards:
-              - type: entities
-                title: Commute Time
-                show_header_toggle: false
-                entities:
-                  - sensor.becks_commute_to_work
-                  - sensor.ross_commute_to_work
-              - type: conditional
-                conditions:
-                  - entity: group.person_becks
-                    state: 'not_home'
-                card:
-                  type: entities
-                  title: Travel Time - Becks
-                  show_header_toggle: false
-                  entities:
-                    - sensor.becks_time_to_home
-              - type: conditional
-                conditions:
-                  - entity: group.person_ross
-                    state: 'not_home'
-                card:
-                  type: entities
-                  title: Travel Time - Ross
-                  show_header_toggle: false
-                  entities:
-                    - sensor.ross_time_to_home
-              - type: entities
-                title: Trains
-                show_header_toggle: false
-                entities:
-                  - sensor.train_1_scheduled
-                  - sensor.train_1_status
+          - type: entities
+            title: Trains
+            show_header_toggle: false
+            entities:
+              - sensor.train_1_scheduled
+              - sensor.train_1_status
 
                   
 ##  MAPS  ######################################
@@ -243,6 +218,17 @@ views:
           - binary_sensor.bedroom_motion
           - binary_sensor.lounge_motion
           - binary_sensor.gym_motion
+      - type: entities
+        title: House Alarm (Konnected)
+        show_header_toggle: false
+        entities:
+          - binary_sensor.konnected_hallway
+          - binary_sensor.konnected_kitchen
+          - binary_sensor.konnected_landing
+          - binary_sensor.konnected_lounge
+          - binary_sensor.konnected_study
+          - binary_sensor.konnected_utility
+          - switch.konnected_buzzer
       #- type: divider
       - type: entities
         title: Last Motion Detection
@@ -364,6 +350,11 @@ views:
                   "off": /local/images/discomode_off.png
           - type: media-control
             entity: media_player.lounge
+      - type: entities
+        title: Plex
+        show_header_toggle: false
+        entities:
+          - media_player.plex_aftn
           
           
 ######################################################################
@@ -387,7 +378,7 @@ views:
           - automation.turn_light_brightness_to_full_in_morning
           - automation.turn_lights_on_when_arriving_home_after_sunset
           - automation.turn_lounge_lights_on_at_sunset_if_someone_is_home
-          - automation.turn_off_all_lights_if_noone_at_home
+          - automation.turn_off_all_lights_if_no_one_at_home
           - automation.turn_off_lounge_lights_at_11pm
           - automation.turn_off_upstairs_lights_at_sunrise
           - automation.turn_on_upstairs_lights_at_sunset
@@ -412,7 +403,7 @@ views:
         title: House Alarm Automation
         show_header_toggle: false
         entities:          
-          - automation.autoset_alarm
+          - automation.auto_set_alarm
           - automation.cancel_alarm_if_home
           - automation.cancel_alarm_when_cleaner_is_at_home
       - type: entities
@@ -428,6 +419,13 @@ views:
           - automation.turn_off_heating_if_noone_home
           - automation.warm_towels  
       - type: entities
+        title: Movie Mode
+        show_header_toggle: false
+        entities:          
+          - automation.movie_mode_off
+          - automation.movie_mode_on
+          - automation.movie_mode_paused 
+      - type: entities
         title: Xmas
         show_header_toggle: false
         entities:
@@ -436,8 +434,8 @@ views:
           - automation.xmas_lights_on
           - automation.xmas_lights_on_if_home
           - automation.turn_on_christmas_songs_in_house_on_25th_dec
-      - type: entities
-        title: Tester
-        show_header_toggle: false
-        entities:
-          - input_boolean.tester
+#      - type: entities
+#        title: Tester
+#        show_header_toggle: false
+#        entities:
+#          - input_boolean.tester
