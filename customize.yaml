@@ -43,6 +43,12 @@ switch.gym_floor_fan:
   #friendly_name: 'Outside Christmas Lights'
   icon: mdi:fan
   friendly_name: 'Gym Floor Fan'
+light.hue_color_lamp_1_3:
+  icon: mdi:ceiling-light
+  friendly_name: 'Hollys Bedroom - Ceiling'
+light.hue_color_lamp_2_2:
+  icon: mdi:lamp
+  friendly_name: 'Hollys Bedroom - Lamp'
 
 #### Sensors #################################################################################################
 #------------------------------------------------------------------------------------------------------------#
@@ -221,6 +227,9 @@ input_boolean.movie_mode:
 
 #### Other ###################################################################################################
 #------------------------------------------------------------------------------------------------------------#
+switch.konnected_buzzer:
+  icon: mdi:volume-high
+  friendly_name: 'Alarm Buzzer'
 switch.gym_fan:
   icon: mdi:fan
   friendly_name: 'Gym Extractor Fan'

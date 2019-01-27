@@ -145,12 +145,13 @@
   action:
     - service: light.turn_off
       data:
-        entity_id: group.all_lights   
-#    - service: notify.pushbullet
-#      data_template:
-#        title: "Away Notification"
-#        message: "You are both now away"         
-        
+        entity_id: group.all_lights
+    - service: media_player.turn_off
+      entity_id: media_player.kitchen
+    - service: media_player.turn_off
+      entity_id: media_player.lounge        
+    - service: switch.turn_off
+      entity_id: switch.christmas_tree         
           
 - alias: 'Turn lights on when arriving home after sunset'
   initial_state: false
@@ -511,7 +512,7 @@
       entity_id: binary_sensor.konnected_study
       to: 'off'
       for:
-        minutes: 15
+        minutes: 30
   action:
     - service: switch.turn_off
       entity_id: switch.christmas_tree 
@@ -626,9 +627,6 @@
     - platform: state
       entity_id: device_tracker.iphone
       from: 'Becks Work'
-    - platform: state
-      entity_id: input_boolean.tester
-      to: 'on'
   condition:
     - condition: time
       weekday:
@@ -649,33 +647,16 @@
           - media_player.kitchen
         media_content_id: 'http://10.0.30.3:8123/local/sounds/smw_power-up.mp3'
         media_content_type: audio/mp3
-    - delay: 1
+    - delay: 
+        seconds: 1
     - service: tts.google_say
+      entity_id: media_player.kitchen
       data_template:
-        entity_id: media_player.kitchen
         message: 'Becks has now left work, she will be home in roughly {{ states.sensor.becks_time_to_home.state }} minutes time'
-    - delay: 5
+    - delay: 
+        seconds: 5
     - service: media_player.sonos_restore
       entity_id: media_player.kitchen
-      
-#- alias: 'Set working day'
-#  initial_state: true
-#  trigger:
-#    - platform: time
-#      at: '00:00:05'
-#  condition:
-#    - condition: template
-#      value_template: >-
-#        {% if now().isoweekday() < 6 %}
-#          true
-#        {% else %}
-#          false
-#        {% endif %}
-#  action:
-#    service_template: >
-#    ice: input_boolean.turn_on
-#      data:
-#        entity_id: input_boolean.is_work_day
     
         
 #### Heating #################################################################################################
@@ -762,9 +743,10 @@
         transition: 300
     - service: switch.turn_off
       entity_id: switch.christmas_tree
-    - service: input_boolean.turn_on
+    - service: alarm_control_panel.alarm_arm_away
       data:
-        entity_id: input_boolean.alarm
+        entity_id: alarm_control_panel.house_alarm
+        code: !secret alarm_pin
     
 - alias: 'Turn on all automations when not on holiday'
   initial_state: true
@@ -781,96 +763,44 @@
       entity_id: group.autos_heating
     - service: automation.turn_on
       entity_id: group.autos_other
-    - service: input_boolean.turn_off
+    - service: alarm_control_panel.alarm_disarm
       data:
-        entity_id: input_boolean.alarm
+        entity_id: alarm_control_panel.house_alarm
+        code: !secret alarm_pin
     - service: script.turn_on
       entity_id: script.set_nest_home
 
 
 
-#### Alarm Mode ##############################################################################################
+#### Alarm ###################################################################################################
 #------------------------------------------------------------------------------------------------------------#
 
-- alias: 'Auto-set Alarm'
+- alias: 'Alarm auto-set'
   initial_state: true
   trigger:
     - platform: state
       entity_id: group.people_alarm
       to: 'not_home'
   action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.alarm
+    - service: alarm_control_panel.alarm_arm_home
+      data:
+        entity_id: alarm_control_panel.house_alarm
+        code: !secret alarm_pin
 
-- alias: 'Cancel alarm if home'
+- alias: 'Alarm auto-cancel when home'
   initial_state: true
   trigger:
     - platform: state
       entity_id: group.people_alarm
       to: 'home'
   action:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.alarm
-      
-- alias: 'Cancel alarm when cleaner is at home'
-  initial_state: true
-  trigger:
-    - platform: time
-      at: '12:30:00'
-  condition:
-    condition: time
-    weekday:
-      - mon
-  action:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.alarm
-
-- alias: 'Please turn alarm off'
-  initial_state: true
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.kitchen_motion
-      to: 'on'
-  condition:
-    condition: state
-    entity_id: input_boolean.alarm
-    state: 'on'
-  action:
-    - service: tts.google_say
-      entity_id: media_player.kitchen
+    - service: alarm_control_panel.alarm_disarm
       data:
-        message: 'Warning, the alarm is armed. The homeowners have been notified'
-
-- alias: 'Activate Alarm'
+        entity_id: alarm_control_panel.house_alarm
+        code: !secret alarm_pin
+      
+- alias: 'Alarm - Away Mode motion detection (all zones)'
   initial_state: true
-  trigger:
-    - platform: state
-      entity_id: input_boolean.alarm
-      to: 'on'
-  action:
-    - service: automation.turn_on
-      entity_id: automation.motion_detection
-    - service: notify.pushbullet
-      data_template:
-        title: "Alarm Enabled"
-        message: "House alarm has been enabled"   
-
-- alias: 'Deactivate Alarm'
-  initial_state: true
-  trigger:
-    - platform: state
-      entity_id: input_boolean.alarm
-      to: 'off'
-  action:
-    - service: automation.turn_off
-      entity_id: automation.motion_detection 
-    - service: notify.pushbullet
-      data_template:
-        title: "Alarm Disabled"
-        message: "House alarm has been disabled"
-
-- alias: 'Motion detection'
-  initial_state: false
   trigger:
     - platform: state
       entity_id: binary_sensor.downstairs_motion
@@ -886,39 +816,120 @@
       to: 'on'
     - platform: state
       entity_id: binary_sensor.bedroom_motion
-      to: 'on'    
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_hallway
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_kitchen
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_landing
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_lounge
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_study
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_utility
+      to: 'on'          
   condition:
     - condition: state
-      entity_id: input_boolean.alarm
-      state: 'on'
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_away      
   action:
-    - service: camera.snapshot
-      data:
-        entity_id: camera.garage_front
-        filename: '/config/www/images/garage_front.jpg'
-    - service: camera.snapshot
-      data:
-        entity_id: camera.rear_elevation
-        filename: '/config/www/images/rear_elevation.jpg'
-    - delay: 
-        seconds: 2
-    - service: notify.pushbullet
-      data_template:
-        title: "Alarm Triggered"
-        message: "House alarm has been set off at {{ states.input_select.last_room_with_motion.state }}"
-    - service: notify.pushbullet
-      data:
-        data:
-          file: '/config/www/images/garage_front.jpg'
-        title: "Alarm Camera - Garage"
-        message: "Motion detected at {{ states.input_select.last_room_with_motion.state }}"
-    - service: notify.pushbullet
-      data:
-        data:
-          file: '/config/www/images/rear_elevation.jpg'
-        title: "Alarm Camera - Garden"
-        message: "Motion detected at {{ states.input_select.last_room_with_motion.state }}"
+    - service: alarm_control_panel.alarm_trigger
+      entity_id: alarm_control_panel.home_alarm
       
+- alias: 'Alarm - Away Mode motion detection (no kitchen zone)'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.downstairs_motion
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.upstairs_motion
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.lounge_motion
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.bedroom_motion
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_hallway
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_landing
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_lounge
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_study
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_utility
+      to: 'on'          
+  condition:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_home      
+  action:
+    - service: alarm_control_panel.alarm_trigger
+      entity_id: alarm_control_panel.home_alarm
+        
+- alias: 'Alarm Pending - Entry'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: armed_home
+      to: pending
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: armed_away
+      to: pending
+  action:
+    - service: script.turn_on
+      entity_id: script.alarm_triggered
+
+- alias: 'Alarm Pending - Exit'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: disarmed
+      to: pending
+  action:
+    - service: script.turn_on
+      entity_id: script.alarm_set
+
+- alias: 'Alarm Cancel'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: pending
+      to: disarmed
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: triggered
+      to: disarmed
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: armed_away
+      to: disarmed
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: armed_home
+      to: disarmed
+  action:
+    - service: script.turn_off
+      entity_id: script.alarm_set
+    - service: script.turn_off
+      entity_id: script.alarm_triggered
+    - service: script.turn_on
+      entity_id: script.alarm_cancelled
       
       
 #### Last Motion Detected ####################################################################################
@@ -929,6 +940,9 @@
     - platform: state
       entity_id: binary_sensor.lounge_motion
       to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_lounge
+      to: 'on'      
   condition:
     - condition: template
       value_template: '{{ states.input_select.last_room_with_motion.state != "Lounge" }}'
@@ -942,6 +956,9 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.kitchen_motion
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_kitchen
       to: 'on'
   condition:
     - condition: template
@@ -971,6 +988,9 @@
     - platform: state
       entity_id: binary_sensor.downstairs_motion
       to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_hallway
+      to: 'on'
   condition:
     - condition: template
       value_template: '{{ states.input_select.last_room_with_motion.state != "Downstairs" }}'
@@ -985,6 +1005,9 @@
     - platform: state
       entity_id: binary_sensor.upstairs_motion
       to: 'on'
+    - platform: state
+      entity_id: binary_sensor.konnected_landing
+      to: 'on'
   condition:
     - condition: template
       value_template: '{{ states.input_select.last_room_with_motion.state != "Upstairs" }}'
@@ -993,3 +1016,31 @@
       entity_id: input_select.last_room_with_motion
       data:
         option: 'Upstairs'
+        
+- alias: Last Room With Motion - Study
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.konnected_study
+      to: 'on'
+  condition:
+    - condition: template
+      value_template: '{{ states.input_select.last_room_with_motion.state != "Study" }}'
+  action:
+    - service: input_select.select_option
+      entity_id: input_select.last_room_with_motion
+      data:
+        option: 'Study'
+        
+- alias: Last Room With Motion - Utility Room
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.konnected_utility
+      to: 'on'
+  condition:
+    - condition: template
+      value_template: '{{ states.input_select.last_room_with_motion.state != "Utility Room" }}'
+  action:
+    - service: input_select.select_option
+      entity_id: input_select.last_room_with_motion
+      data:
+        option: 'Utility Room'

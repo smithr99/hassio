@@ -7,5 +7,6 @@ last_room_with_motion:
     - Bedroom
     - Upstairs
     - Downstairs
+    - Utility Room
     - Unknown
   initial: Unknown

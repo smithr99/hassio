@@ -1,3 +1,5 @@
+## Lounge ##########################################################
+##-----------------------------------------------------------------#
 - name: 'Alarm - Lounge'
   entities:
     light.lounge_lamp_door: on
@@ -75,6 +77,9 @@
       xy_color: [0.455, 0.421]
       brightness_pct: 100
 
+      
+## Downstairs ######################################################
+##-----------------------------------------------------------------#      
 - name: 'Day - Downstairs'
   entities:
     light.downstairs_front_door:
@@ -111,6 +116,9 @@
       state: on
       brightness_pct: 10
 
+      
+## Upstairs ########################################################
+##-----------------------------------------------------------------#      
 - name: 'Day - Upstairs'
   entities:
     light.upstairs_hallway_middle:
@@ -137,7 +145,10 @@
     light.upstairs_hallway_window:
       state: on
       brightness_pct: 25
-      
+
+
+## Bedroom #########################################################
+##-----------------------------------------------------------------#      
 - name: 'Day - Bedroom'
   entities:
     light.hue_ambiance_candle_1:
@@ -155,3 +166,106 @@
     light.hue_ambiance_candle_2:
       state: on
       brightness_pct: 100
+      
+      
+## Sams Bedroom ####################################################
+##-----------------------------------------------------------------#      
+- name: 'Sams Bedroom 1 - Bright'
+  entities:
+    light.hue_color_lamp_1_2:
+      state: on
+      brightness_pct: 100
+      xy_color: [0.457,0.41]
+    light.hue_color_lamp_2:
+      state: on
+      brightness_pct: 100
+      xy_color: [0.457,0.41]
+    light.hue_color_lamp_3:
+      state: on
+      brightness_pct: 100
+      xy_color: [0.457,0.41]
+
+- name: 'Sams Bedroom 2 - Bedtime'
+  entities:
+    light.hue_color_lamp_1_2:
+      state: on
+      brightness_pct: 60
+      xy_color: [0.399,0.337]
+    light.hue_color_lamp_2:
+      state: on
+      brightness_pct: 25
+      xy_color: [0.157,0.097]
+    light.hue_color_lamp_3:
+      state: on
+      brightness_pct: 25
+      xy_color: [0.157,0.097]
+
+- name: 'Sams Bedroom 3 - Tropical Twilight'
+  entities:
+    light.hue_color_lamp_1_2:
+      state: on
+      brightness_pct: 50
+      xy_color: [0.541,0.386]
+    light.hue_color_lamp_2:
+      state: on
+      brightness_pct: 50
+      xy_color: [0.29,0.224]
+    light.hue_color_lamp_3:
+      state: on
+      brightness_pct: 50
+      xy_color: [0.29,0.224]
+
+- name: 'Sams Bedroom 4 - Artic Aurora'
+  entities:
+    light.hue_color_lamp_1_2:
+      state: on
+      brightness_pct: 50
+      xy_color: [0.158,0.087]
+    light.hue_color_lamp_2:
+      state: on
+      brightness_pct: 50
+      xy_color: [0.159,0.219]
+    light.hue_color_lamp_3:
+      state: on
+      brightness_pct: 50
+      xy_color: [0.158,0.087]
+
+- name: 'Sams Bedroom 5 - Savanna Sunset'
+  entities:
+    light.hue_color_lamp_1_2:
+      state: on
+      brightness_pct: 75
+      xy_color: [0.464,0.45]
+    light.hue_color_lamp_2:
+      state: on
+      brightness_pct: 75
+      xy_color: [0.584,0.354]
+    light.hue_color_lamp_3:
+      state: on
+      brightness_pct: 75
+      xy_color: [0.388,0.401]
+      
+
+## Hollys Bedroom ##################################################
+##-----------------------------------------------------------------#      
+- name: 'Hollys Bedroom 1 - Bright'
+  entities:
+    light.hue_color_lamp_1_3:
+      state: on
+      brightness_pct: 100
+      xy_color: [0.457,0.41]
+    light.hue_color_lamp_2_2:
+      state: on
+      brightness_pct: 100
+      xy_color: [0.457,0.41]
+
+- name: 'Hollys Bedroom 2 - Pink'
+  entities:
+    light.hue_color_lamp_1_3:
+      state: on
+      brightness_pct: 100
+      xy_color: [0.483,0.214]
+    light.hue_color_lamp_2_2:
+      state: on
+      brightness_pct: 100
+      xy_color: [0.483,0.214]

@@ -113,6 +113,7 @@ media_player:
     entity_namespace: 'plex'
     scan_interval: 5
     include_non_clients: true
+
 konnected:
   access_token: !secret konnected_token
   devices:
@@ -142,7 +143,16 @@ konnected:
         - zone: out
           name: 'konnected_buzzer'
           
-      
+alarm_control_panel:
+  - platform: manual
+    name: Home Alarm
+    code: !secret alarm_pin
+    pending_time: 30
+    delay_time: 0
+    trigger_time: 300
+    disarmed:
+      trigger_time: 0
+    
       
 #### Cloud Services ##########################################################################################
 #------------------------------------------------------------------------------------------------------------#
@@ -150,6 +160,9 @@ google:
   client_id: !secret google_api_client_id
   client_secret: !secret google_api_client_secret
 
+# Alexa display categories as follows:
+# https://developer.amazon.com/docs/device-apis/alexa-discovery.html#display-categories
+  
 cloud:
   alexa:
     filter:
@@ -169,6 +182,7 @@ cloud:
         - switch
       include_entities:
         - script.movie_mode
+        - script.where_is_becks
         - switch.christmas_tree
         - switch.gym_floor_fan
     entity_config:
@@ -183,7 +197,29 @@ cloud:
       switch.gym_floor_fan:
         name: Christmas Lights
         description: Outside Christmas Lights
-        display_categories: LIGHT    
+        display_categories: LIGHT  
+      script.where_is_becks:
+        name: Where is Becks
+        description: Tell the kitchen where Becks is
+        display_categories: OTHER
+  google_actions:
+    filter:
+      include_entities:
+        - media_player.kitchen
+        - media_player.lounge
+    entity_config:
+      media_player.kitchen:
+        name: Kitchen Sonos
+        aliases:
+          - kitchen speaker
+          - kitchen
+        room: Kitchen
+      media_player.lounge:
+        name: Lounge Sonos
+        aliases:
+          - lounge speaker
+          - lounge
+        room: Lounge
 
 #### External files ##########################################################################################
 #------------------------------------------------------------------------------------------------------------#

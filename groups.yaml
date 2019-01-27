@@ -61,7 +61,19 @@ bedroom:
   entities:
     - light.hue_ambiance_candle_1
     - light.hue_ambiance_candle_2
+    
+samsbedroom:
+  name: 'Sams Bedroom'
+  entities:
+    - light.hue_color_lamp_1_2
+    - light.hue_color_lamp_2
+    - light.hue_color_lamp_3
 
+hollysbedroom:
+  name: 'Hollys Bedroom'
+  entities:
+    - light.hue_color_lamp_1_3
+    - light.hue_color_lamp_2_2
 
 
 ## Groups - SWITCHES ###############################################
@@ -120,13 +132,13 @@ person_guests:
 
 family:    
   entities:
-    - group.person_ross
-    - group.person_becks
+    - device_tracker.google_maps_118445798565592098278
+    - device_tracker.iphone
 
 people_alarm:
   entities:
-    - group.person_ross
-    - group.person_becks
+    - device_tracker.google_maps_118445798565592098278
+    - device_tracker.iphone
     - device_tracker.lyndas_iphone
     - device_tracker.tonysphone
     

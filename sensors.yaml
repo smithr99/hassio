@@ -42,7 +42,7 @@
           mdi:battery-charging-80 
         {% elif battery <= 90 and batterycharging == 1 %}
           mdi:battery-charging-90 
-        {% elif battery == 100 and batterycharging == 1 %}
+        {% elif battery <= 100 and batterycharging == 1 %}
           mdi:battery-charging-100
         {% elif battery <= 10 and batterycharging == 0 %}
           mdi:battery-10
@@ -62,7 +62,7 @@
           mdi:battery-80
         {% elif battery <= 90 and batterycharging == 0 %}
           mdi:battery-90
-        {% elif battery == 100 and batterycharging == 0 %}
+        {% elif battery <= 100 and batterycharging == 0 %}
           mdi:battery-100  
         {% endif %}
     becks_phone_battery:
@@ -95,7 +95,7 @@
           mdi:battery-charging-80 
         {% elif battery <= 90 and batterycharging == 1 %}
           mdi:battery-charging-90 
-        {% elif battery == 100 and batterycharging == 1 %}
+        {% elif battery <= 100 and batterycharging == 1 %}
           mdi:battery-charging-100
         {% elif battery <= 10 and batterycharging == 0 %}
           mdi:battery-10
@@ -115,8 +115,8 @@
           mdi:battery-80
         {% elif battery <= 90 and batterycharging == 0 %}
           mdi:battery-90
-        {% elif battery == 100 and batterycharging == 0 %}
-          mdi:battery-100  
+        {% elif battery <= 100 and batterycharging == 0 %}
+          mdi:battery
         {% endif %}        
     both_phones_charging:
       value_template: >
@@ -302,14 +302,14 @@
   name: 'Bedroom Lux' 
   
 - platform: rest 
-  resource: !secret dimmer_bedroom 
-  name: 'Bedroom Dimmer Button Event'
+  resource: !secret dimmer_samsbedroom 
+  name: 'Sams Bedroom Dimmer Button Event'
   value_template: '{{ value_json.state.buttonevent }}' 
   scan_interval: 1 
 #
 - platform: rest 
-  resource: !secret dimmer_bedroom 
-  name: 'Bedroom Dimmer Last Update'
+  resource: !secret dimmer_samsbedroom 
+  name: 'Sams Bedroom Dimmer Last Update'
   value_template: '{{ value_json.state.lastupdated }}' 
   scan_interval: 1 
   
@@ -318,21 +318,21 @@
     bedroom_dimmer_status:
       friendly_name: 'Bedroom Dimmer'
       value_template: >-
-        {% if is_state('sensor.bedroom_dimmer_button_event', '1002') %}
+        {% if is_state('sensor.sams_bedroom_dimmer_button_event', '1002') %}
           1 Click
-        {% elif is_state('sensor.bedroom_dimmer_button_event', '1003') %}
+        {% elif is_state('sensor.sams_bedroom_dimmer_button_event', '1003') %}
           1 Hold
-        {% elif is_state('sensor.bedroom_dimmer_button_event', '2002') %}
+        {% elif is_state('sensor.sams_bedroom_dimmer_button_event', '2002') %}
           2 Click
-        {% elif is_state('sensor.bedroom_dimmer_button_event', '2003') %}
+        {% elif is_state('sensor.sams_bedroom_dimmer_button_event', '2003') %}
           2 Hold
-        {% elif is_state('sensor.bedroom_dimmer_button_event', '3002') %}
+        {% elif is_state('sensor.sams_bedroom_dimmer_button_event', '3002') %}
           3 Click
-        {% elif is_state('sensor.bedroom_dimmer_button_event', '3003') %}
+        {% elif is_state('sensor.sams_bedroom_dimmer_button_event', '3003') %}
           3 Hold
-        {% elif is_state('sensor.bedroom_dimmer_button_event', '4002') %}
+        {% elif is_state('sensor.sams_bedroom_dimmer_button_event', '4002') %}
           4 Click
-        {% elif is_state('sensor.bedroom_dimmer_button_event', '4003') %}
+        {% elif is_state('sensor.sams_bedroom_dimmer_button_event', '4003') %}
           4 Hold
         {% else %}
           No Response
