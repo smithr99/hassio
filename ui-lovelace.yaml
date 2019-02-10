@@ -79,10 +79,10 @@ views:
                   - type: picture-glance
                     title: Downstairs
                     entities:
-                      - light.lounge_lamp_door
+                      #- light.lounge_lamp_door
                       - light.downstairs_stairs
                       - light.downstairs_middle
-                      #- light.downstairs_front_door
+                      - light.downstairs_front_door
                       - sensor.downstairs_temperature
                     image: /local/images/downstairs2.jpg                   
               - type: picture-glance

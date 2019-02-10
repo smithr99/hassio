@@ -63,7 +63,7 @@
         {% elif battery <= 90 and batterycharging == 0 %}
           mdi:battery-90
         {% elif battery <= 100 and batterycharging == 0 %}
-          mdi:battery-100  
+          mdi:battery
         {% endif %}
     becks_phone_battery:
       friendly_name: 'Becks iPhone Battery'
